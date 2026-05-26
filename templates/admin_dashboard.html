@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>لوحة تحكم الأكاديمية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}">
+    <style>
+        :root {
+            --bg: #020617;
+            --bg-soft: #050b1f;
+            --card: #060b22;
+            --card-soft: #07112c;
+            --primary: #4f46e5;
+            --primary-soft: #6366f1;
+            --accent: #22c55e;
+            --mute: #9ca3af;
+            --white: #f9fafb;
+            --radius-lg: 22px;
+            --radius-md: 18px;
+            --shadow-soft: 0 24px 60px rgba(15, 23, 42, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #020617, #020617 40%, #010313 80%);
+            color: var(--white);
+            min-height: 100vh;
+        }
+
+        .app-shell {
+            min-height: 100vh;
+            padding: 24px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .top-bar {
+            background: radial-gradient(circle at top left, #0b1220, #020617);
+            border-radius: 26px;
+            padding: 16px 20px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .top-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-chip {
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(59, 130, 246, 0.15));
+            font-size: 12px;
+            color: var(--mute);
+        }
+
+        .top-title-main {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .top-title-sub {
+            font-size: 13px;
+            color: #9ca3af;
+        }
+
+        .top-hero-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .welcome-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px 20px;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .welcome-right {
+            display: flex;
+            justify-content: flex-start;
+            width: 25%;
+        }
+
+        .welcome-logo {
+            width: 120px;
+            height: 120px;
+        }
+
+        .welcome-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .welcome-center {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .welcome-title {
+            font-size: 26px;
+            font-weight: 900;
+            color: #f9fafb;
+        }
+
+        .top-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .quick-pill {
+            font-size: 12px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            color: var(--mute);
+        }
+
+        .logo-box {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 24px;
+            background: transparent !important;
+            overflow: visible;
+            padding: 0;
+        }
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: smooth;
+        }
+
+        .dashboard-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 42px;
+            width: 100%;
+        }
+
+        .card {
+            background: radial-gradient(circle at top left, #020617, #030712 40%, #020617 100%);
+            border-radius: var(--radius-lg);
+            padding: 18px 18px 16px;
+            border: 1px solid rgba(30, 64, 175, 0.38);
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.18), transparent 55%);
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .card-title-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .card-title {
+            font-size: 26px !important;
+            font-weight: 900;
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            color: var(--mute);
+        }
+
+        .card-tag {
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            color: var(--mute);
+        }
+
+        .card-main-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .metric-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--mute);
+        }
+
+        .metric-value-lg {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary-soft);
+        }
+
+        .metric-caption {
+            font-size: 11px;
+            color: var(--mute);
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .pill {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.88);
+            border: 1px solid rgba(55, 65, 81, 0.8);
+            color: var(--mute);
+        }
+
+        .pill.green {
+            border-color: rgba(34, 197, 94, 0.7);
+            color: #bbf7d0;
+        }
+
+        .pill.red {
+            border-color: rgba(239, 68, 68, 0.7);
+            color: #fecaca;
+        }
+
+        .week-bars {
+            margin-top: 16px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95));
+            border-radius: 16px;
+            padding: 10px 12px;
+            border: 1px solid rgba(30, 64, 175, 0.6);
+        }
+
+        .week-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--mute);
+            margin-bottom: 6px;
+        }
+
+        .week-row {
+            display: grid;
+            grid-template-columns: 52px 1fr;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+
+        .week-label {
+            color: var(--mute);
+        }
+
+        .week-bar-track {
+            width: 100%;
+            height: 18px !important;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.95);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .week-bar-attend {
+            position: absolute;
+            inset: 0;
+            width: 90%;
+            background: linear-gradient(90deg, #4f46e5, #6366f1);
+        }
+
+        .week-bar-absent {
+            position: absolute;
+            inset: 0;
+            width: 12%;
+            right: 0;
+            background: linear-gradient(90deg, rgba(248, 113, 113, 0), rgba(248, 113, 113, 0.85));
+        }
+
+        .card-content,
+        .table-row div,
+        .card-subtitle {
+            font-size: 16px;
+        }
+
+        .week-bar-attend,
+        .week-bar-absent {
+            height: 100% !important;
+        }
+
+        canvas {
+            height: 320px !important;
+        }
+
+        .card-subtitle {
+            font-size: 18px !important;
+        }
+
+        .week-label {
+            font-size: 18px !important;
+            font-weight: 600;
+        }
+
+        .week-row div {
+            font-size: 18px !important;
+        }
+
+        .week-header span {
+            font-size: 18px !important;
+            font-weight: 700 !important;
+        }
+
+        .big-metric,
+        .metric-value,
+        .card-value {
+            font-size: 38px !important;
+            font-weight: 900 !important;
+            color: #ffffff;
+        }
+
+        .week-filter-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 12px 0 20px;
+        }
+
+        .week-filter-label {
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .week-filter-select {
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: rgba(15,23,42,0.9);
+            border: 1px solid rgba(148,163,184,0.4);
+            color: #e5e7eb;
+            font-size: 13px;
+            min-width: 160px;
+        }
+
+        .week-row {
+            display: grid;
+            grid-template-columns: 70px 1fr 60px;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .week-percentage-label {
+            text-align: left;
+            font-size: 14px;
+            color: #e5e7eb;
+        }
+
+        .grade-filter-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 12px 0 20px;
+        }
+
+        .grade-filter-label {
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .grade-filter-select {
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: rgba(15,23,42,0.9);
+            border: 1px solid rgba(148,163,184,0.4);
+            color: #e5e7eb;
+            font-size: 13px;
+            min-width: 160px;
+        }
+
+        .top3-two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 4px;
+        }
+
+        .top3-subject {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.96));
+            border-radius: 14px;
+            padding: 8px 10px;
+            border: 1px solid rgba(30, 64, 175, 0.65);
+        }
+
+        .top3-subject-title {
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #e5e7eb;
+            font-weight: 600;
+        }
+
+        .teacher-filter-row {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0 18px;
+            flex-wrap: wrap;
+        }
+
+        .teacher-filter-row {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0 18px;
+            flex-wrap: wrap;
+        }
+
+        .week-row[data-attend="92"] .week-bar-attend { width: 92%; }
+        .week-row[data-attend="94"] .week-bar-attend { width: 94%; }
+        .week-row[data-attend="88"] .week-bar-attend { width: 88%; }
+        .week-row[data-attend="90"] .week-bar-attend { width: 90%; }
+        .week-row[data-attend="86"] .week-bar-attend { width: 86%; }
+        .week-row[data-attend="89"] .week-bar-attend { width: 89%; }
+        .week-row[data-attend="91"] .week-bar-attend { width: 91%; }
+
+        .card-table {
+            margin-top: 10px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.96));
+            border-radius: 16px;
+            padding: 10px 12px;
+            border: 1px solid rgba(30, 64, 175, 0.6);
+            font-size: 12px;
+        }
+
+        .table-header,
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 6px 2px;
+            align-items: center;
+        }
+
+        .table-header {
+            color: var(--mute);
+            border-bottom: 1px solid rgba(55, 65, 81, 0.7);
+            margin-bottom: 2px;
+            font-size: 11px;
+        }
+
+        .table-row:nth-child(odd) {
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .table-row:nth-child(even) {
+            background: rgba(15, 23, 42, 0.7);
+        }
+
+        .badge-level {
+            display: inline-flex;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 10px;
+            background: rgba(79, 70, 229, 0.22);
+            color: #c7d2fe;
+        }
+
+        .points-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36px;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 11px;
+            background: radial-gradient(circle at top, #4f46e5, #1d4ed8);
+        }
+
+        .card-small-layout {
+            display: grid;
+            grid-template-columns: 1.4fr 1.2fr;
+            gap: 18px;
+            margin-top: 4px;
+        }
+
+        .top3-block-title {
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #e5e7eb;
+        }
+
+        .top3-list {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.96));
+            border-radius: 14px;
+            padding: 8px 10px;
+            border: 1px solid rgba(30, 64, 175, 0.65);
+            font-size: 12px;
+        }
+
+        .top3-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+        }
+
+        .top3-rank {
+            font-size: 11px;
+            color: var(--mute);
+        }
+
+        .top3-name {
+            font-size: 12px;
+        }
+
+        .top3-score {
+            font-size: 11px;
+            color: #c7d2fe;
+        }
+
+        .gender-card-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .gender-totals {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .gender-total-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-soft);
+        }
+
+        .gender-label {
+            font-size: 11px;
+            color: var(--mute);
+        }
+
+        .gender-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .gender-box {
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 14px;
+            padding: 8px 10px;
+            border: 1px solid rgba(55, 65, 81, 0.85);
+            font-size: 12px;
+        }
+
+        .gender-box span {
+            display: block;
+        }
+
+        .gender-count {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .gender-bar-wrap {
+            margin-top: 4px;
+            width: 100%;
+            height: 7px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.96);
+            overflow: hidden;
+        }
+
+        .gender-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4f46e5, #6366f1);
+        }
+
+        .gender-bar.female {
+            background: linear-gradient(90deg, #ec4899, #f97316);
+        }
+
+        .commit-card {
+            margin-top: 10px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.97), rgba(15, 23, 42, 0.98));
+            border-radius: 14px;
+            padding: 8px 10px;
+            border: 1px solid rgba(30, 64, 175, 0.7);
+            font-size: 12px;
+        }
+
+        .commit-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .commit-number {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .commit-caption {
+            font-size: 11px;
+            color: var(--mute);
+        }
+
+        .commit-bar-wrap {
+            margin-top: 4px;
+            width: 100%;
+            height: 7px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.96);
+            overflow: hidden;
+        }
+
+        .commit-bar {
+            height: 100%;
+            width: 91%;
+            background: linear-gradient(90deg, #22c55e, #4ade80);
+        }
+
+        .footer-strip {
+            margin-top: 4px;
+            font-size: 10px;
+            color: rgba(148, 163, 184, 0.8);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .app-shell {
+                padding: 16px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .top-right {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-shell">
+    <header class="top-bar welcome-header">
+        <div class="welcome-right">
+            <div class="logo-box welcome-logo">
+                <img src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}" alt="Advantage Academy Logo">
+            </div>
+        </div>
+
+        <div class="welcome-center">
+            <h1 class="welcome-title">
+                مرحباً بك في لوحة تحكم المشرف
+            </h1>
+        </div>
+    </header>
+
+    <main class="dashboard-grid">
+        <section class="card">
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="card-title-block">
+                        <div class="card-title">نسبة الحضور والغياب الأسبوعي</div>
+                        <div class="card-subtitle">متابعة التزام الطلاب بالحضور خلال الأسابيع الدراسية</div>
+                    </div>
+                    <div class="card-tag">عرض حسب الأسبوع المختار</div>
+                </div>
+
+                <!-- فلتر الأسابيع -->
+                <div class="week-filter-row">
+                    <div class="week-filter-label">اختر الأسبوع:</div>
+                    <select id="weekSelect" class="week-filter-select" onchange="updateWeekData()">
+                        <option value="1">الأسبوع الأول</option>
+                        <option value="2">الأسبوع الثاني</option>
+                        <option value="3">الأسبوع الثالث</option>
+                        <option value="4">الأسبوع الرابع</option>
+                        <option value="5">الأسبوع الخامس</option>
+                        <option value="6">الأسبوع السادس</option>
+                        <option value="7">الأسبوع السابع</option>
+                        <option value="8">الأسبوع الثامن</option>
+                        <option value="9">الأسبوع التاسع</option>
+                        <option value="10">الأسبوع العاشر</option>
+                    </select>
+                </div>
+
+                <div class="card-main-row">
+                    <div class="metric-block">
+                        <div class="metric-label">متوسط الحضور</div>
+                        <div class="metric-value-lg" id="weeklyAttendanceValue">92٪</div>
+                        <div class="metric-caption">مقارنة بالأسبوع الماضي: تحسن بمقدار 3 نقاط</div>
+                    </div>
+                    <div class="metric-block">
+                        <div class="metric-label">متوسط الغياب</div>
+                        <div class="metric-value-lg" id="weeklyAbsenceValue" style="color:#fb7185;">8٪</div>
+                    </div>
+                </div>
+
+                <div class="week-bars">
+                    <div class="week-header">
+                        <span>تفصيل الأيام</span>
+                        <span>نسبة الحضور لكل يوم</span>
+                    </div>
+
+                    <!-- الاثنين -->
+                    <div class="week-row" data-day="monday">
+                        <div class="week-label">الاثنين</div>
+                        <div class="week-bar-track">
+                            <div class="week-bar-attend" style="width: 95%;"></div>
+                            <div class="week-bar-absent" style="width: 5%;"></div>
+                        </div>
+                        <div class="week-percentage-label" id="mondayValue">95٪</div>
+                    </div>
+
+                    <!-- الأربعاء -->
+                    <div class="week-row" data-day="wednesday">
+                        <div class="week-label">الأربعاء</div>
+                        <div class="week-bar-track">
+                            <div class="week-bar-attend" style="width: 90%;"></div>
+                            <div class="week-bar-absent" style="width: 10%;"></div>
+                        </div>
+                        <div class="week-percentage-label" id="wednesdayValue">90٪</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="card-title-block">
+                        <div class="card-title">نقاط الانضباط والمشاركة والحضور</div>
+                        <div class="card-subtitle">عرض نقاط الطلاب بناءً على المادة والصف والاسم</div>
+                    </div>
+                    <div class="card-tag">عرض النقاط الأسبوعية</div>
+                </div>
+
+                <!-- فلتر الاسم والصف -->
+                <div style="display:flex; gap:10px; margin-bottom:12px; flex-wrap:wrap;">
+
+                    <!-- فلتر اسم الطالب -->
+                    <input 
+                        type="text" 
+                        id="filterName" 
+                        placeholder="ابحث باسم الطالب…" 
+                        style="
+                            padding:7px 14px; 
+                            border-radius:12px; 
+                            background:rgba(15,23,42,0.85); 
+                            border:1px solid rgba(148,163,184,0.35);
+                            color:#e5e7eb;
+                            font-size:12px;
+                            flex:1;
+                        " 
+                        onkeyup="filterTable()"
+                    >
+
+                    <!-- فلتر الصف -->
+                    <select 
+                        id="filterGrade" 
+                        onchange="filterTable()" 
+                        style="
+                            padding:7px 14px; 
+                            border-radius:12px; 
+                            background:rgba(15,23,42,0.85); 
+                            border:1px solid rgba(148,163,184,0.35);
+                            color:#e5e7eb;
+                            font-size:12px;
+                        ">
+                        <option value="">كل الصفوف</option>
+                        <option value="الأول">الأول</option>
+                        <option value="الثاني">الثاني</option>
+                        <option value="الثالث">الثالث</option>
+                    </select>
+
+                </div>
+
+                <div class="card-table">
+                    <div class="table-header">
+                        <div>اسم الطالب</div>
+                        <div>المادة</div>
+                        <div style="text-align:center;">النقاط</div>
+                    </div>
+
+                    <!-- الصفوف -->
+                    <div class="table-row" data-name="عبدالله الحربي" data-grade="الأول">
+                        <div>عبدالله الحربي</div>
+                        <div><span class="badge-level">إنجليزي</span></div>
+                        <div style="text-align:center;"><span class="points-chip">96</span></div>
+                    </div>
+
+                    <div class="table-row" data-name="ريم العتيبي" data-grade="الثاني">
+                        <div>ريم العتيبي</div>
+                        <div><span class="badge-level">ماث</span></div>
+                        <div style="text-align:center;"><span class="points-chip">94</span></div>
+                    </div>
+
+                    <div class="table-row" data-name="محمد السبيعي" data-grade="الثالث">
+                        <div>محمد السبيعي</div>
+                        <div><span class="badge-level">إنجليزي</span></div>
+                        <div style="text-align:center;"><span class="points-chip">92</span></div>
+                    </div>
+
+                    <div class="table-row" data-name="نورة القحطاني" data-grade="الأول">
+                        <div>نورة القحطاني</div>
+                        <div><span class="badge-level">ماث</span></div>
+                        <div style="text-align:center;"><span class="points-chip">90</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <script>
+            function filterTable() {
+                let filterName = document.getElementById("filterName").value.toLowerCase().trim();
+                let filterGrade = document.getElementById("filterGrade").value;
+
+                document.querySelectorAll(".table-row").forEach(row => {
+                    let name = row.dataset.name.toLowerCase();
+                    let grade = row.dataset.grade;
+
+                    let matchName = name.includes(filterName);
+                    let matchGrade = filterGrade === "" || filterGrade === grade;
+
+                    if (matchName && matchGrade) row.style.display = "";
+                    else row.style.display = "none";
+                });
+            }
+        </script>
+
+        <section class="card">
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="card-title-block">
+                        <div class="card-title">أفضل ثلاثة طلاب في الإنجليزي والرياضيات</div>
+                        <div class="card-subtitle">تحديث أسبوعي لأعلى الدرجات في المواد الأساسية</div>
+                    </div>
+                </div>
+
+                <!-- فلتر الصف -->
+                <div class="grade-filter-row">
+                    <label for="gradeSelectTop" class="grade-filter-label">عرض حسب الصف:</label>
+                    <select id="gradeSelectTop" class="grade-filter-select" onchange="updateTopStudents()">
+                        <option value="1">الأول ثانوي</option>
+                        <option value="2">الثاني ثانوي</option>
+                        <option value="3">الثالث ثانوي</option>
+                    </select>
+                </div>
+
+                <div class="top3-two-columns">
+                    <!-- الرياضيات -->
+                    <div class="top3-subject">
+                        <div class="top3-subject-title">مادة الرياضيات</div>
+
+                        <div class="top3-row">
+                            <span id="math1Score" class="top3-score">99٪</span>
+                            <span id="math1Name" class="top3-name">عبدالله الحربي</span>
+                            <span class="top3-rank">المركز الأول</span>
+                        </div>
+
+                        <div class="top3-row">
+                            <span id="math2Score" class="top3-score">96٪</span>
+                            <span id="math2Name" class="top3-name">ليان المطيري</span>
+                            <span class="top3-rank">المركز الثاني</span>
+                        </div>
+
+                        <div class="top3-row">
+                            <span id="math3Score" class="top3-score">94٪</span>
+                            <span id="math3Name" class="top3-name">راكان العبدالله</span>
+                            <span class="top3-rank">المركز الثالث</span>
+                        </div>
+                    </div>
+
+                    <!-- الإنجليزي -->
+                    <div class="top3-subject">
+                        <div class="top3-subject-title">مادة اللغة الإنجليزية</div>
+
+                        <div class="top3-row">
+                            <span id="eng1Score" class="top3-score">98٪</span>
+                            <span id="eng1Name" class="top3-name">ريم العتيبي</span>
+                            <span class="top3-rank">المركز الأول</span>
+                        </div>
+
+                        <div class="top3-row">
+                            <span id="eng2Score" class="top3-score">95٪</span>
+                            <span id="eng2Name" class="top3-name">أحمد الزهراني</span>
+                            <span class="top3-rank">المركز الثاني</span>
+                        </div>
+
+                        <div class="top3-row">
+                            <span id="eng3Score" class="top3-score">93٪</span>
+                            <span id="eng3Name" class="top3-name">سارة الشهري</span>
+                            <span class="top3-rank">المركز الثالث</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="card-title-block">
+                        <div class="card-title">إحصائية الطلاب في الأكاديمية</div>
+                        <div class="card-subtitle">عدد الطلاب المسجلين حاليًا مع توزيع بنين وبنات ومؤشر الالتزام</div>
+                    </div>
+                    <div class="card-tag">بيانات عامة</div>
+                </div>
+
+                <div class="gender-card-row">
+                    <div class="gender-totals">
+                        <div>
+                            <div class="gender-label">إجمالي عدد الطلاب والطالبات</div>
+                            <div class="gender-total-number">1,032 طالب/طالبة</div>
+                        </div>
+
+                    </div>
+
+                    <div class="gender-split">
+                        <div class="gender-box">
+                            <span class="gender-label">عدد الطلاب البنين</span>
+                            <span class="gender-count">580</span>
+                            <div class="gender-bar-wrap">
+                                <div class="gender-bar" style="width:56%;"></div>
+                            </div>
+                        </div>
+                        <div class="gender-box">
+                            <span class="gender-label">عدد الطالبات البنات</span>
+                            <span class="gender-count">452</span>
+                            <div class="gender-bar-wrap">
+                                <div class="gender-bar female" style="width:44%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="commit-card">
+                        <div class="commit-main">
+                            <div>
+                                <div class="gender-label">مؤشر الالتزام العام</div>
+                                <div class="commit-number">91</div>
+                            </div>
+                            <div class="commit-caption">من 100 | أعلى من الشهر الماضي بمقدار 4 نقاط</div>
+                        </div>
+                        <div class="commit-bar-wrap">
+                            <div class="commit-bar"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="card-title-block">
+                        <div class="card-title">جداول المعلمين حسب الصف</div>
+                        <div class="card-subtitle">عرض أسماء المعلمين مع الصفوف (بنين / بنات)</div>
+                    </div>
+                </div>
+
+                <!-- فلاتر الصف والجنس -->
+                <div class="teacher-filter-row">
+                    <select id="teacherGradeSelect" class="grade-filter-select" onchange="updateTeachersBoard()">
+                        <option value="1">الأول ثانوي</option>
+                        <option value="2">الثاني ثانوي</option>
+                        <option value="3">الثالث ثانوي</option>
+                    </select>
+
+                    <select id="teacherGenderSelect" class="grade-filter-select" onchange="updateTeachersBoard()">
+                        <option value="boys">بنين</option>
+                        <option value="girls">بنات</option>
+                    </select>
+                </div>
+
+                <!-- جدول المعلمين -->
+                <div class="card-table">
+                    <div class="table-header">
+                        <div>اسم المعلم</div>
+                        <div>المادة</div>
+                    </div>
+
+                    <div id="teacherRows">
+                        <!-- يتم ملؤها ديناميكياً بالـ JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script>
+    // بيانات مثال – عدلها براحتك
+    const teachersData = {
+        1: { // الأول ثانوي
+            boys: [
+                { name: "أحمد الحربي", subject: "الرياضيات" },
+                { name: "سلمان المطيري", subject: "اللغة الإنجليزية" }
+            ],
+            girls: [
+                { name: "نورة العتيبي", subject: "الرياضيات" },
+                { name: "ريم الزهراني", subject: "اللغة الإنجليزية" }
+            ]
+        },
+        2: { // الثاني ثانوي
+            boys: [
+                { name: "فهد القحطاني", subject: "الرياضيات" },
+                { name: "سعود السبيعي", subject: "اللغة الإنجليزية" }
+            ],
+            girls: [
+                { name: "جود المطيري", subject: "الرياضيات" },
+                { name: "غادة الشمراني", subject: "اللغة الإنجليزية" }
+            ]
+        },
+        3: { // الثالث ثانوي
+            boys: [
+                { name: "محمد الشهري", subject: "الرياضيات" },
+                { name: "عبدالعزيز العبدالله", subject: "اللغة الإنجليزية" }
+            ],
+            girls: [
+                { name: "أصايل العتيبي", subject: "الرياضيات" },
+                { name: "روان الحارثي", subject: "اللغة الإنجليزية" }
+            ]
+        }
+    };
+
+    function updateTeachersBoard() {
+        const grade  = document.getElementById('teacherGradeSelect').value;  // 1 أو 2 أو 3
+        const gender = document.getElementById('teacherGenderSelect').value; // boys أو girls
+
+        const container = document.getElementById('teacherRows');
+        container.innerHTML = "";
+
+        const list = teachersData[grade] && teachersData[grade][gender] ? teachersData[grade][gender] : [];
+
+        list.forEach(t => {
+            const row = document.createElement('div');
+            row.className = 'table-row';
+            row.innerHTML = `
+                <div>${t.name}</div>
+                <div>${t.subject}</div>
+            `;
+            container.appendChild(row);
+        });
+    }
+
+    // تشغيل أولي عند فتح الصفحة
+    window.addEventListener('load', updateTeachersBoard);
+
+    // بيانات أفضل 3 طلاب لكل صف ولكل مادة
+    const topStudentsData = {
+        1: { // الأول ثانوي
+            math: [
+                { name: "عبدالله الحربي", score: 99 },
+                { name: "ليان المطيري", score: 96 },
+                { name: "راكان العبدالله", score: 94 }
+            ],
+            eng: [
+                { name: "ريم العتيبي", score: 98 },
+                { name: "أحمد الزهراني", score: 95 },
+                { name: "سارة الشهري", score: 93 }
+            ]
+        },
+        2: { // الثاني ثانوي
+            math: [
+                { name: "خالد العتيبي", score: 97 },
+                { name: "نوف الشمري", score: 95 },
+                { name: "سلمان الحربي", score: 92 }
+            ],
+            eng: [
+                { name: "جود المطيري", score: 96 },
+                { name: "عبدالعزيز السبيعي", score: 94 },
+                { name: "غادة الزهراني", score: 91 }
+            ]
+        },
+        3: { // الثالث ثانوي
+            math: [
+                { name: "عبدالرحمن القحطاني", score: 98 },
+                { name: "هناء الشهري", score: 96 },
+                { name: "ماجد العبدالله", score: 93 }
+            ],
+            eng: [
+                { name: "أصايل العتيبي", score: 97 },
+                { name: "محمد المطلق", score: 94 },
+                { name: "روان الحارثي", score: 92 }
+            ]
+        }
+    };
+
+    function updateTopStudents() {
+        const grade = document.getElementById('gradeSelectTop').value;
+        const data = topStudentsData[grade];
+        if (!data) return;
+
+        // Math
+        document.getElementById('math1Name').textContent  = data.math[0].name;
+        document.getElementById('math1Score').textContent = data.math[0].score + "٪";
+        document.getElementById('math2Name').textContent  = data.math[1].name;
+        document.getElementById('math2Score').textContent = data.math[1].score + "٪";
+        document.getElementById('math3Name').textContent  = data.math[2].name;
+        document.getElementById('math3Score').textContent = data.math[2].score + "٪";
+
+        // English
+        document.getElementById('eng1Name').textContent  = data.eng[0].name;
+        document.getElementById('eng1Score').textContent = data.eng[0].score + "٪";
+        document.getElementById('eng2Name').textContent  = data.eng[1].name;
+        document.getElementById('eng2Score').textContent = data.eng[1].score + "٪";
+        document.getElementById('eng3Name').textContent  = data.eng[2].name;
+        document.getElementById('eng3Score').textContent = data.eng[2].score + "٪";
+    }
+
+    // تشغيل مبدئي عند تحميل الصفحة
+    window.addEventListener('load', updateTopStudents);
+
+    // بيانات الأسابيع (تقدر تعدل الأرقام لاحقاً)
+    const weeksData = {
+        1: { attendance: 92, absence: 8, monday: 95, wednesday: 90 },
+        2: { attendance: 90, absence: 10, monday: 92, wednesday: 88 },
+        3: { attendance: 88, absence: 12, monday: 89, wednesday: 85 },
+        4: { attendance: 93, absence: 7, monday: 96, wednesday: 91 },
+        5: { attendance: 91, absence: 9, monday: 93, wednesday: 89 },
+        6: { attendance: 89, absence: 11, monday: 90, wednesday: 87 },
+        7: { attendance: 94, absence: 6, monday: 97, wednesday: 92 },
+        8: { attendance: 87, absence: 13, monday: 88, wednesday: 84 },
+        9: { attendance: 90, absence: 10, monday: 91, wednesday: 89 },
+        10:{ attendance: 92, absence: 8, monday: 94, wednesday: 90 }
+    };
+
+    function updateWeekData() {
+        const select = document.getElementById('weekSelect');
+        const weekKey = select.value;
+        const data = weeksData[weekKey];
+        if (!data) return;
+
+        // تحديث قيم الحضور والغياب العامة
+        document.getElementById('weeklyAttendanceValue').textContent = data.attendance + '٪';
+        document.getElementById('weeklyAbsenceValue').textContent = data.absence + '٪';
+
+        // تحديث الاثنين
+        const mondayRow = document.querySelector('.week-row[data-day="monday"]');
+        const mondayAttendBar = mondayRow.querySelector('.week-bar-attend');
+        const mondayAbsentBar = mondayRow.querySelector('.week-bar-absent');
+        document.getElementById('mondayValue').textContent = data.monday + '٪';
+
+        mondayAttendBar.style.width = data.monday + '%';
+        mondayAbsentBar.style.width = (100 - data.monday) + '%';
+
+        // تحديث الأربعاء
+        const wedRow = document.querySelector('.week-row[data-day="wednesday"]');
+        const wedAttendBar = wedRow.querySelector('.week-bar-attend');
+        const wedAbsentBar = wedRow.querySelector('.week-bar-absent');
+        document.getElementById('wednesdayValue').textContent = data.wednesday + '٪';
+
+        wedAttendBar.style.width = data.wednesday + '%';
+        wedAbsentBar.style.width = (100 - data.wednesday) + '%';
+    }
+
+    // استدعاء مبدئي عند تحميل الصفحة
+    window.addEventListener('load', updateWeekData);
+</script>
+</body>
+</html>

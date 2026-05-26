@@ -1,0 +1,397 @@
+:root{
+	--primary-color: #3C467B;     /* Main header/nav background */
+	--secondary-color: #50589C;   /* Buttons and section highlights */
+	--accent-color: #636CCB;      /* Hover and accent elements */
+	--light-color: #6E8CFB;       /* Section backgrounds or hover transitions */
+	--text-color: #ffffff;        /* Keep text white for contrast */
+	--dark-text-color: #1A1A1A;   /* For dark text sections */
+	--alt-bg: #F9FAFB;            /* light off-white background used across site */
+
+	/* Utility / legacy mappings and small UI colors */
+	--error-color: #991b1b;
+	--error-bg: #fee2e2;
+	--error-border: #ffcdcd;
+	--info-color: #075985;
+	--info-bg: #e0f2fe;
+	--card-border: #e0e6ef;
+	--table-border: #eef2f7;
+	--table-border-2: #f1f4fa;
+	--input-border: #e5e7eb;
+	--muted-text: #475569;
+	--hover-bg: #f6f9ff;
+	--hover-border: #e3e8f5;
+	--muted-gradient-start: #e0e0e0;
+	--muted-gradient-end: #c8c8c8;
+	--border-radius: 10px;
+	--radius:24px;       /* Rounded corners (legacy) */
+	--radius-xl:36px;    /* Extra rounded (hero/cards) */
+	--shadow:0 12px 30px rgba(15,26,43,.10);
+	--shadow-lg:0 20px 50px rgba(15,26,43,.18);
+	/* Legacy aliases for older code that references previous names */
+	--brand: var(--primary-color);
+	--brand-dark: var(--secondary-color);
+	--accent: var(--accent-color);
+	--text: #2f2f2f; /* keep body text dark by default for content areas */
+	--bg: var(--alt-bg);
+	--card: #ffffff;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family: "Inter","Tajawal",Arial,sans-serif;color:var(--text);background:var(--bg)}
+
+
+@keyframes pulse{ 0%{ transform: scale(0.98); opacity: .95 } 50%{ transform: scale(1.05); opacity: 1 } 100%{ transform: scale(0.98); opacity: .95 } }
+
+/* fade out animation: ~3s gentle fade */
+#splash-overlay.fade-out{ animation: splashFadeOut 3s ease forwards; }
+@keyframes splashFadeOut{ 0%{ opacity:1 } 80%{ opacity:0.1 } 100%{ opacity:0; visibility:hidden } }
+.stat .kpi .num{color:var(--brand);}
+
+/* Table */
+.table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:16px;background:var(--card);box-shadow:var(--shadow)}
+.table th,.table td{padding:12px 14px;border-bottom:1px solid var(--table-border);text-align:right}
+.table th{background:var(--alt-bg);color:var(--muted-text);font-size:13px;letter-spacing:.02em}
+
+/* Forms */
+label{display:block;font-weight:700;margin:10px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid var(--input-border);border-radius:12px;background:var(--card);outline:none}
+input:focus,select:focus{border-color:var(--accent-color);box-shadow:0 0 0 3px rgba(99,108,203,.12)}
+.error{color:var(--error-color);background:var(--error-bg);border:1px solid var(--error-border);padding:10px 12px;border-radius:10px;margin:10px 0}
+/* Make main typography colors modern gray */
+body,label,h1,h2,h3,p{color:var(--text)}
+
+/* Layout with sidebar (dashboard) */
+.layout{display:grid;grid-template-columns:260px 1fr;gap:22px;min-height:calc(100vh - 72px);padding:20px 0}
+.sidebar{background:var(--card);border-radius:20px;box-shadow:var(--shadow);height:fit-content;position:sticky;top:92px;padding:16px}
+.sidebar .logo-large{width:140px;margin:0 auto 10px}
+.nav-list{display:grid;gap:8px;margin-top:10px}
+.nav-item{display:block;padding:12px 14px;border-radius:14px;text-decoration:none;color:var(--dark-text-color);border:1px solid var(--table-border)}
+.nav-item:hover{background:var(--hover-bg);border-color:var(--hover-border)}
+
+/* Responsive */
+@media (max-width:1000px){
+	.hero-grid{grid-template-columns:1fr}
+	.layout{grid-template-columns:1fr}
+	.stats{grid-template-columns:1fr}
+}
+
+@media (max-width:700px){ .logo-large{ width:120px; } }
+
+/* Login page layout and splash overlay */
+html, body {
+	height: 100%;
+	background: #ffffff !important; /* ensure login page is white */
+}
+
+.center-page {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	background: #ffffff;
+}
+
+.login-card {
+	width: 100%;
+	max-width: 460px;
+	background: transparent !important;
+	border-radius: 0 !important; /* remove rounded corners */
+	box-shadow: none !important; /* remove shadow */
+	padding: 28px 28px 32px;
+}
+
+.aa-logo {
+	display: block;
+	margin: 0 auto 18px;
+	width: 230px; /* updated per design */
+	height: auto;
+}
+
+.aa-logo-container { display:flex; justify-content:center; align-items:center; margin-bottom:1.5rem; }
+
+/* Logo video styling (small/logo-like) */
+#logo-video.logo-video { display:block; margin: 0 auto 14px; width: 160px; height: auto; max-width: 45vw; }
+#logo-video.logo-video img { display:block; width:100%; height:auto }
+
+/* New clean white layout rules requested */
+html, body { background: #ffffff !important; margin: 0; padding: 0; height: 100%; }
+.frame, .card, .panel, .login-card { background: transparent !important; border: none !important; box-shadow: none !important; }
+.login-wrapper, .page-root, .center-page { display: grid; place-items: center; min-height: 100vh; background: #ffffff; }
+.login-logo { display: grid; place-items: center; margin-bottom: 24px; }
+.login-logo-video { width: min(180px, 45vw); height: auto; border-radius: 0; box-shadow: none; background: transparent; }
+.login-logo-video img{ width:100%; height:auto }
+
+/* Ensure panel-form stays transparent but inputs/buttons keep their visual styles */
+.panel-form { background: transparent !important; box-shadow: none !important; border: none !important; padding: 0; }
+.panel-form input, .panel-form select, .panel-form textarea, .panel-form .btn { background-color: transparent !important; }
+
+/* Remove panel-form and related rounded corners/shadows for a flat white look */
+.panel-form, .left, .form-column { border-radius: 0 !important; box-shadow: none !important; border: none !important; background: transparent !important; }
+
+/* Ensure inputs and buttons remain readable on white */
+.panel-form input, .panel-form select, .panel-form textarea, .panel-form .btn { background-color: transparent !important; }
+
+.login-card form .form-group { margin-bottom: 14px; }
+
+
+
+/* Login hero background (used by templates/login.html) */
+.hero {
+	width: 100%;
+	height: 100%;
+	background-image: url("/static/images/login-hero.png");
+	background-size: cover;
+	background-position: center;
+	border-radius: 20px;
+}
+
+/* Right-side hero panel for login page */
+.panel-hero {
+	position: relative;
+	min-height: 620px;
+	border-radius: 24px;
+	overflow: hidden;
+	background: linear-gradient(to bottom right, var(--muted-gradient-start), var(--muted-gradient-end));
+}
+
+/* Remove visible frame outline: keep rounded corners but no shadow or border */
+.frame { background-color: transparent !important; border-radius: 24px !important; box-shadow: none !important; border: none !important; }
+
+.hero-img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+/* Ensure hero image placed in static/assets displays correctly on the right panel */
+.panel-hero img.hero {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 0 24px 24px 0;
+	position: absolute;
+	inset: 0;
+}
+
+/* Enforce min-height/overflow and background fit for the panel-hero (override if inline not present) */
+.panel-hero {
+	min-height: 620px !important;
+	overflow: hidden !important;
+	border-radius: 0 24px 24px 0 !important;
+	background-size: cover !important;
+	background-position: center !important;
+	background-repeat: no-repeat !important;
+}
+
+/* Page background image for login (covers entire viewport) */
+html, body { min-height:100vh; }
+body {
+	background-color: #ffffff; /* site-wide white background */
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+}
+
+/* Header brand stack (logo + arabic + english) */
+.brand-stack{ display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; text-align:center }
+.brand-text-ar{ color: #ffffff; font-weight:800; font-size:14px; line-height:1; }
+.brand-text-en{ color: #ffffff; font-weight:600; font-size:12px; line-height:1; opacity:0.9; letter-spacing:0.06em }
+.header-logo{ height:80px; width:auto; display:block }
+
+/* ensure header uses centered brand look */
+.site-header .header-inner{ display:flex; align-items:center; justify-content:space-between }
+.brand-link{ display:flex; align-items:center; gap:12px; text-decoration:none }
+
+/* RTL friendly: keep text order as Arabic on top */
+.brand-stack[dir="rtl"]{ direction:rtl }
+
+/* Left login panel: set to pure white and preserve left-side rounded corners */
+.panel-form, .left, .form-column {
+	background-color: var(--card) !important;
+	border-radius: 24px 0 0 24px !important;
+	box-shadow: none !important;
+	border: none !important;
+}
+
+/* Make sure inputs and primary/secondary buttons inside the left panel stay white */
+.panel-form input,
+.panel-form select,
+.panel-form textarea,
+.panel-form .btn,
+.left input,
+.left .btn,
+.form-column input,
+.form-column .btn {
+	background-color: var(--card) !important;
+	color: inherit;
+}
+
+/* Login-page specific logo sizing and fade-in animation (affects only login when using aa-logo-login) */
+.aa-logo-login {
+	width: 260px;
+	height: auto;
+	display: inline-block;
+	margin: 0 auto 25px auto;
+}
+
+/* Fade-in animation for the login logo */
+.fade-in {
+	opacity: 0;
+	animation: fadeInLogo 2s ease-in forwards;
+}
+
+@keyframes fadeInLogo {
+	from { opacity: 0; transform: translateY(-20px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Advantage Academy Login Layout ===== */
+
+body {
+	background: #fff;
+	margin: 0;
+	padding: 0;
+}
+
+/* Container: enforce full-viewport split with no gaps */
+.aa-login-layout {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+
+/* Left side: full-height background image panel (50% width) */
+.aa-left-side {
+	flex: 0 0 65%;           /* 65% width to emphasize illustration */
+	min-width: 0;
+	height: 100vh;          /* fill viewport height */
+	background-image: url("../assets/buldingoffaa.png");
+	background-size: cover; /* cover to fill area while preserving aspect */
+	background-position: center;
+	background-repeat: no-repeat;
+	margin: 0;
+	padding: 0;
+}
+
+.aa-left-inner {
+	max-width: 520px;
+	width: 100%;
+}
+
+.aa-logo {
+  width: 260px;
+  height: auto;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.aa-title {
+	font-size: 32px;
+	font-weight: 700;
+	color: #2f3b7a;
+	margin-bottom: 8px;
+}
+
+.aa-subtitle {
+	font-size: 16px;
+	color: #5a5a5a;
+	margin-bottom: 24px;
+}
+
+.aa-form-wrapper {
+  width: 100%;
+}
+
+/* Remove any borders or background boxes from form */
+.card, .panel, .login-box {
+	background: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+/* Right side (background image) */
+.aa-right-side {
+	flex: 0 0 35%;          /* narrower right column */
+	min-width: 0;
+	height: 100vh;
+	display: flex;
+	justify-content: center; /* center form vertically/horizontally */
+	align-items: center;
+	flex-direction: column;
+	background-color: #ffffff;
+	padding: 0 36px; /* slightly reduced horizontal padding for the narrower column */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+	.aa-login-layout {
+		grid-template-columns: 1fr;
+	}
+	.aa-right-side {
+		min-height: 38vh;
+		order: 2;
+	}
+	.aa-left-side {
+		order: 1;
+		padding: 28px 20px;
+	}
+	.aa-logo {
+		width: 220px;
+	}
+	.aa-title {
+		font-size: 26px;
+	}
+}
+
+/* ===== About page styles ===== */
+.about-hero{
+	background-image: linear-gradient(rgba(60,70,123,0.45), rgba(99,108,203,0.25)), url('../assets/aa_hero.jpg');
+	background-size: cover;
+	background-position: center;
+	padding: 80px 0;
+	color: #fff;
+}
+.about-hero-inner{ max-width: 1100px; margin: 0 auto; text-align: center }
+.hero-title{ font-size: 36px; margin: 0; font-weight:800; color:#fff }
+.hero-sub{ font-size:18px; display:block; opacity:0.95 }
+.hero-lead{ margin-top:12px; max-width:900px; margin-left:auto; margin-right:auto; color:rgba(255,255,255,0.95) }
+
+.about-content{ padding:64px 20px }
+.about-grid{ display:grid; grid-template-columns: 1fr 360px; gap:32px; align-items:start; max-width:1100px; margin:0 auto }
+.about-desc h2, .programs h2, .values h2{ color: #3C467B; margin-bottom:12px }
+.about-desc p{ color:#333; line-height:1.6 }
+
+.about-stats{ display:flex; flex-direction:column; gap:12px }
+.stat-card{ background:#fff; border-radius:12px; padding:16px; box-shadow:0 8px 20px rgba(60,70,123,0.06); text-align:center }
+.stat-num{ font-size:24px; font-weight:800; color:#3C467B }
+.stat-label{ color:#666; margin-top:6px }
+
+.programs{ margin-top:28px; max-width:1100px; margin-left:auto; margin-right:auto }
+.program-list{ display:flex; gap:16px; flex-wrap:wrap }
+.prog{ flex:1 1 260px; background:#fff; padding:18px; border-radius:12px; box-shadow:0 8px 20px rgba(99,108,203,0.06); color:#333 }
+
+.values-list{ display:flex; gap:16px; margin-top:12px }
+.value-card{ flex:1; background:#fff; border-radius:12px; padding:18px; box-shadow:0 8px 20px rgba(60,70,123,0.06); text-align:center }
+.value-card h4{ color:#3C467B; margin-bottom:8px }
+
+.cta{ background:linear-gradient(90deg,#3C467B, #636CCB); color:#fff; padding:28px; text-align:center; margin:34px auto; max-width:900px; border-radius:12px }
+.cta .btn{ margin:8px }
+
+/* Responsive about page */
+@media (max-width: 900px){
+	.about-grid{ grid-template-columns: 1fr }
+	.program-list{ flex-direction:column }
+	.values-list{ flex-direction:column }
+	.hero-title{ font-size:28px }
+}
+

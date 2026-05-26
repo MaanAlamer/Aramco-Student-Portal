@@ -1,0 +1,78 @@
+/* ===========================
+   Advantage Academy Landing
+   File: static/css/landing.css
+   =========================== */
+
+/* Color Variables – ألوان متناسقة مع أكاديمية التقدم */
+:root {
+  --primary-dark: #1f2a44;
+  --primary: #223159;
+  --primary-light: #4f5f86;
+  --accent: #4b7cff;
+  --accent-light: #7c8dff;
+  --light: #f4f7fb;
+  --dark: #050816;
+  --text: #2d3b55;
+  --border-radius: 10px;
+  --box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --transition: all 0.3s ease;
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--light);
+  color: var(--text);
+  line-height: 1.6;
+  direction: rtl;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section {
+  padding: 80px 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-header h2 {
+  font-size: 2.2rem;
+  color: var(--primary-dark);
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  right: 50%;
+  transform: translateX(50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+}
+
+.section-header p {
+  max-width: 650px;
+  margin: 10px auto 0;
+}

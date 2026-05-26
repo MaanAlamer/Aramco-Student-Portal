@@ -1,0 +1,165 @@
+/* styles.css
+   Global styles for "أكاديمية التقدم – Advantage Academy"
+   Dark modern theme, RTL friendly. Use with the HTML files in the project root.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+
+:root{
+  --page-bg: #0b1220;
+  --section-bg-1: #111827;
+  --section-bg-2: #020617;
+  --card-bg: #111827;
+  --text: #f9fafb;
+  --muted: rgba(249,250,251,0.72);
+  --accent-from: #2563eb;
+  --accent-to: #4f46e5;
+  --accent-gradient: linear-gradient(90deg,var(--accent-from),var(--accent-to));
+  --soft-shadow: 0 8px 30px rgba(2,6,23,0.65);
+  --border-radius: 12px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--page-bg);
+  color:var(--text);
+  font-family:'Tajawal', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.6;
+}
+
+/* Utility container */
+.container{max-width:1160px;margin:0 auto;padding:0 20px}
+
+/* NAVBAR */
+.navbar{
+  position:fixed;inset:0 0 auto 0;top:0;left:0;right:0;
+  background:transparent;
+  z-index:1100;
+  transition: background .28s ease, box-shadow .28s ease, backdrop-filter .28s ease;
+  backdrop-filter: blur(6px);
+}
+.navbar.scrolled{ background: var(--section-bg-2); box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
+
+.navbar-inner{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 6px; }
+
+.brand{ display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text); }
+.brand .brand-text{ display:flex; flex-direction:column; line-height:1; }
+.brand .brand-title{ font-weight:700; font-size:1.05rem; }
+.brand .brand-sub{ font-size:0.78rem; color:var(--muted); }
+.brand .brand-logo{ width:46px; height:46px; border-radius:8px; background:linear-gradient(135deg,#0f1724, #1f2937); display:inline-block; box-shadow: var(--soft-shadow); }
+
+/* nav links */
+.nav-links{ display:flex; align-items:center; gap:18px; direction:rtl; }
+.nav-links a{ color:var(--text); text-decoration:none; font-size:1.05rem; font-weight:500; padding:6px 2px; position:relative; transition: color .18s ease; }
+
+/* underline effect - grows right to left */
+.nav-links a::after{ content:''; position:absolute; height:3px; left:0; right:0; bottom:-8px; background:#f8b739; transform:scaleX(0); transform-origin:right center; transition:transform .24s cubic-bezier(.2,.9,.2,1); border-radius:3px; }
+.nav-links a:hover::after, .nav-links a:focus::after{ transform:scaleX(1); }
+
+/* actions on right (in DOM right for RTL it's visually right) */
+.nav-actions{ display:flex; gap:10px; align-items:center }
+.btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 16px; border-radius:9999px; font-weight:700; cursor:pointer; text-decoration:none; color:var(--text); border:0; transition: transform .15s ease, box-shadow .12s ease; }
+.btn:focus{ outline:3px solid rgba(37,99,235,0.12); outline-offset:3px }
+
+.btn-primary{ background:var(--accent-gradient); box-shadow: 0 10px 30px rgba(79,70,229,0.12); }
+.btn-primary:hover{ transform:translateY(-3px); box-shadow: 0 14px 40px rgba(79,70,229,0.18); }
+
+.btn-outline{ background:transparent; border:1.5px solid rgba(249,250,251,0.12); }
+.btn-outline:hover{ background: rgba(255,255,255,0.02); transform:translateY(-2px); }
+
+/* responsive hamburger */
+.hamburger{ display:none; width:44px; height:44px; background:transparent; border:0; align-items:center; justify-content:center; cursor:pointer; color:var(--text); }
+.hamburger .lines{ width:22px; height:2px; background:var(--text); position:relative }
+.hamburger .lines::before, .hamburger .lines::after{ content:''; position:absolute; left:0; width:22px; height:2px; background:var(--text); transition:transform .22s ease; }
+.hamburger .lines::before{ top:-7px } .hamburger .lines::after{ top:7px }
+
+/* Mobile nav panel */
+.mobile-nav{ display:none; position:fixed; inset:64px 12px auto 12px; background:linear-gradient(180deg, rgba(2,6,23,0.96), rgba(8,10,20,0.96)); border-radius:12px; padding:14px; box-shadow:0 20px 50px rgba(2,6,23,0.7); max-width:420px; width:calc(100% - 24px); z-index:1200; }
+.mobile-nav.open{ display:block; }
+.mobile-nav .nav-links{ flex-direction:column; gap:8px }
+.mobile-nav .nav-actions{ flex-direction:column; gap:10px }
+
+/* HERO (index) */
+.hero{ min-height:100vh; display:grid; align-items:center; }
+.hero .hero-inner{ display:grid; grid-template-columns: 1fr 480px; gap:40px; align-items:center; padding:80px 0 }
+.hero .hero-left{ text-align:right }
+.hero h1{ font-size:2.4rem; margin:0 0 12px; line-height:1.05; font-weight:800; letter-spacing:-0.8px }
+.hero p.lead{ color:var(--muted); font-size:1.05rem; margin:0 0 18px }
+
+.hero .hero-cta{ display:flex; gap:12px; align-items:center }
+.hero .hero-image{ height:520px; border-radius:16px; background-size:cover; background-position:center; box-shadow:var(--soft-shadow) }
+.hero .scroll-indicator{ margin-top:26px; color:var(--muted); font-size:0.95rem }
+
+/* Sections */
+.section{ padding:64px 0 }
+.section.alt{ background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+.section .section-title{ font-size:1.6rem; margin-bottom:18px; font-weight:700 }
+
+/* Two-column intro */
+.twocol{ display:grid; grid-template-columns:1fr 420px; gap:28px; align-items:center }
+.twocol .text{ text-align:right }
+.twocol img{ width:100%; border-radius:12px; box-shadow:var(--soft-shadow) }
+
+/* Cards grid */
+.cards{ display:grid; grid-template-columns: repeat(3, 1fr); gap:18px }
+.card{ background:var(--card-bg); padding:18px; border-radius:12px; box-shadow: 0 10px 30px rgba(2,6,23,0.6); }
+.card h4{ margin:0 0 8px; font-size:1.05rem }
+.card p{ margin:0; color:var(--muted) }
+
+/* CTA center */
+.cta-center{ text-align:center; padding:48px 0 }
+.cta-center h2{ font-size:1.8rem; margin-bottom:10px }
+
+/* ABOUT page */
+.split{ display:grid; grid-template-columns: 380px 1fr; gap:28px; align-items:center }
+.mission-vision{ display:flex; gap:18px }
+.mv-box{ background:var(--section-bg-1); padding:18px; border-radius:12px; }
+.mv-box h3{ margin:0 0 8px }
+
+/* Programs / Courses layout */
+.program-grid{ display:grid; grid-template-columns: repeat(2,1fr); gap:16px }
+.program-card{ background:var(--card-bg); padding:18px; border-radius:12px }
+.program-card .tag{ display:inline-block; background:linear-gradient(90deg,#0f1724,#111827); padding:6px 10px; border-radius:10px; color:var(--muted); font-size:0.9rem }
+
+/* Accordion */
+.accordion .item{ background:var(--card-bg); border-radius:10px; padding:12px; margin-bottom:10px }
+.accordion .head{ display:flex; justify-content:space-between; align-items:center; cursor:pointer }
+.accordion .body{ display:none; padding-top:10px; color:var(--muted) }
+.accordion .item.open .body{ display:block }
+
+/* CONTACT */
+.contact-grid{ display:grid; grid-template-columns: 420px 1fr; gap:28px; align-items:center }
+.contact-form{ background:linear-gradient(180deg, rgba(37,99,235,0.06), rgba(79,70,229,0.04)); padding:22px; border-radius:12px }
+.form-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:12px }
+.input, textarea{ width:100%; padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--text) }
+
+/* FOOTER */
+.footer{ background: #020617; padding:40px 0; margin-top:60px }
+.footer .cols{ display:grid; grid-template-columns: repeat(3, 1fr); gap:18px }
+.footer small{ display:block; text-align:center; margin-top:22px; color:var(--muted) }
+
+/* Responsive rules */
+@media (max-width: 1000px){
+  .hero .hero-inner{ grid-template-columns: 1fr; }
+  .twocol{ grid-template-columns:1fr }
+  .split{ grid-template-columns:1fr }
+  .cards{ grid-template-columns: repeat(2,1fr) }
+  .program-grid{ grid-template-columns:1fr }
+  .contact-grid{ grid-template-columns:1fr }
+}
+@media (max-width: 680px){
+  .nav-links{ display:none }
+  .hamburger{ display:flex }
+  .mobile-nav{ inset:64px 10px auto 10px }
+  .cards{ grid-template-columns:1fr }
+}
+
+/* small tweaks */
+.lead-muted{ color:var(--muted) }
+.small{ font-size:0.92rem }
+
+/* End of styles.css */

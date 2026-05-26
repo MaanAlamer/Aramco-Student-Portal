@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>أعذار الطلاب | لوحة المشرف</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}">
+
+  <style>
+    :root{
+      --bg:#020617;
+      --card:#07112c;
+      --border:rgba(30,64,175,.38);
+      --muted:#9ca3af;
+      --white:#f9fafb;
+      --primary:#4f46e5;
+      --primary2:#6366f1;
+      --green:#22c55e;
+      --red:#ef4444;
+      --shadow:0 24px 60px rgba(15,23,42,.75);
+      --radius:22px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:"Cairo",system-ui,-apple-system,Segoe UI,sans-serif;
+      background: radial-gradient(circle at top, #020617, #020617 40%, #010313 85%);
+      color:var(--white);
+      min-height:100vh;
+      padding:22px;
+    }
+
+    .wrap{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+
+    .top{
+      background: radial-gradient(circle at top left, #0b1220, #020617);
+      border:1px solid rgba(148,163,184,.2);
+      border-radius:26px;
+      box-shadow:0 20px 50px rgba(15,23,42,.8);
+      padding:14px 16px;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+    }
+
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand img{width:56px;height:56px;object-fit:contain}
+    .brand h1{font-size:20px;font-weight:900}
+    .brand p{font-size:12px;color:var(--muted)}
+
+    .actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .chip{
+      padding:6px 12px;border-radius:999px;
+      background:linear-gradient(135deg, rgba(79,70,229,.18), rgba(59,130,246,.12));
+      border:1px solid rgba(199,210,254,.22);
+      font-size:12px;color:var(--muted);
+      white-space:nowrap;
+    }
+    .btn{
+      padding:8px 14px;border-radius:999px;
+      border:1px solid rgba(226,232,240,.28);
+      background:rgba(15,23,42,.8);
+      color:#e5e7eb;
+      text-decoration:none;
+      font-size:12px;
+      display:inline-flex;align-items:center;gap:8px;
+      transition:.18s ease;
+      cursor:pointer;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{
+      background:linear-gradient(90deg,var(--primary),var(--primary2));
+      border-color:rgba(199,210,254,.35);
+    }
+
+    .card{
+      background: radial-gradient(circle at top left, #020617, #030712 40%, #020617 100%);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .card:before{
+      content:"";position:absolute;inset:0;
+      background: radial-gradient(circle at top right, rgba(79,70,229,.18), transparent 55%);
+      opacity:.9;pointer-events:none;
+    }
+    .card > *{position:relative;z-index:1}
+
+    .title{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .title h2{font-size:22px;font-weight:900}
+    .title .sub{font-size:13px;color:var(--muted)}
+
+    .filters{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      margin:10px 0 12px;
+    }
+    .select, .input{
+      padding:8px 14px;border-radius:999px;
+      background:rgba(15,23,42,.9);
+      border:1px solid rgba(148,163,184,.35);
+      color:#e5e7eb;font-size:13px;
+      outline:none;
+      min-width: 180px;
+    }
+    .input{min-width:260px;flex:1}
+
+    .table{
+      margin-top:10px;
+      background:linear-gradient(135deg, rgba(15,23,42,.95), rgba(15,23,42,.96));
+      border:1px solid rgba(30,64,175,.6);
+      border-radius:16px;
+      overflow:hidden;
+    }
+    .thead,.tr{
+      display:grid;
+      grid-template-columns: 1.4fr .9fr 1fr 1fr 1.2fr;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+      font-size:12px;
+    }
+    .thead{
+      color:var(--muted);
+      border-bottom:1px solid rgba(55,65,81,.7);
+      font-size:11px;
+      background: rgba(2,6,23,.25);
+    }
+    .tr:nth-child(odd){background:rgba(15,23,42,.88)}
+    .tr:nth-child(even){background:rgba(15,23,42,.72)}
+
+    .pill{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:3px 10px;border-radius:999px;font-size:11px;white-space:nowrap;
+      border:1px solid transparent;
+    }
+    .new{background:rgba(59,130,246,.18);border-color:rgba(59,130,246,.6);color:#bfdbfe}
+    .approved{background:rgba(22,163,74,.18);border-color:rgba(22,163,74,.6);color:#bbf7d0}
+    .rejected{background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.7);color:#fecaca}
+
+    .filelink{color:#93c5fd;text-decoration:underline;font-size:11px}
+    .small{font-size:11px;color:var(--muted)}
+
+    .row-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .act{
+      padding:6px 10px;border-radius:999px;
+      font-size:11px;
+      border:1px solid rgba(226,232,240,.22);
+      background:rgba(15,23,42,.85);
+      color:#e5e7eb;cursor:pointer;
+      transition:.18s ease;
+    }
+    .act:hover{transform:translateY(-1px)}
+    .act-approve{border-color:rgba(34,197,94,.35)}
+    .act-reject{border-color:rgba(239,68,68,.35)}
+
+    .empty{padding:14px 12px;color:var(--muted);font-size:12px}
+    @media (max-width: 980px){
+      .thead,.tr{grid-template-columns:1.2fr .8fr .9fr 1fr 1fr}
+    }
+    @media (max-width: 760px){
+      .thead{display:none}
+      .tr{
+        grid-template-columns:1fr;
+        gap:6px;
+      }
+      .row-actions{justify-content:flex-start}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <img src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}" alt="AA">
+        <div>
+          <h1>أعذار الطلاب</h1>
+          <p>لوحة المشرف — قبول/رفض + عرض المرفقات</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <div class="chip">{{ user.get('email','مشرف') if user else 'مشرف' }}</div>
+        <a class="btn" href="{{ url_for('coordinator_dashboard') }}">الرجوع للوحة المشرف</a>
+        <a class="btn" href="{{ url_for('logout') }}">تسجيل الخروج</a>
+      </div>
+    </div>
+
+    <section class="card">
+      <div class="title">
+        <div>
+          <h2>قائمة الأعذار</h2>
+          <div class="sub">فلترة حسب الحالة/الصف + البحث باسم الطالب</div>
+        </div>
+        <a class="btn btn-primary" href="{{ url_for('coordinator_excuses') }}">تحديث</a>
+      </div>
+
+      <div class="filters">
+        <input class="input" id="qName" type="text" placeholder="ابحث باسم الطالب…" onkeyup="applyFilters()">
+
+        <select class="select" id="qStatus" onchange="applyFilters()">
+          <option value="">كل الحالات</option>
+          <option value="new">قيد المراجعة</option>
+          <option value="approved">مقبول</option>
+          <option value="rejected">مرفوض</option>
+        </select>
+
+        <select class="select" id="qGrade" onchange="applyFilters()">
+          <option value="">كل الصفوف</option>
+          <option value="أول">أول ثانوي</option>
+          <option value="ثاني">ثاني ثانوي</option>
+          <option value="ثالث">ثالث ثانوي</option>
+        </select>
+      </div>
+
+      <div class="table">
+        <div class="thead">
+          <div>الطالب</div>
+          <div>الصف</div>
+          <div>التاريخ</div>
+          <div>الحالة</div>
+          <div style="text-align:left;">إجراءات</div>
+        </div>
+
+        {% for ex in excuses %}
+          {% set s = ex.student %}
+          {% set gtxt = (s.grade if s else "") %}
+          {% set gkey = "أول" if "أول" in gtxt else ("ثاني" if "ثاني" in gtxt else ("ثالث" if "ثالث" in gtxt else "")) %}
+          <div class="tr ex-row"
+               data-name="{{ (s.full_name if s else '') }}"
+               data-status="{{ ex.status }}"
+               data-grade="{{ gkey }}">
+            <div>
+              <div style="font-weight:800">{{ s.full_name if s else '—' }}</div>
+              <div class="small">{{ s.username if s else '' }}</div>
+              <div class="small">{{ ex.reason if ex.reason else '—' }}</div>
+              {% if ex.attachment_path %}
+                {% set clean_path = ex.attachment_path.replace('static/', '', 1) %}
+                <a class="filelink" target="_blank" href="{{ url_for('static', filename=clean_path) }}">عرض المرفق</a>
+              {% else %}
+                <div class="small">لا يوجد مرفق</div>
+              {% endif %}
+            </div>
+
+            <div><span class="pill new">{{ s.grade if s and s.grade else 'غير محدد' }}</span></div>
+
+            <div>{{ ex.date.strftime("%Y-%m-%d") if ex.date else '' }}</div>
+
+            <div>
+              {% if ex.status == 'approved' %}
+                <span class="pill approved">مقبول</span>
+              {% elif ex.status == 'rejected' %}
+                <span class="pill rejected">مرفوض</span>
+              {% else %}
+                <span class="pill new">قيد المراجعة</span>
+              {% endif %}
+            </div>
+
+            <div class="row-actions">
+              <form method="post" action="{{ url_for('coordinator_excuse_approve', excuse_id=ex.id) }}">
+                <button class="act act-approve" type="submit">قبول</button>
+              </form>
+              <form method="post" action="{{ url_for('coordinator_excuse_reject', excuse_id=ex.id) }}">
+                <button class="act act-reject" type="submit">رفض</button>
+              </form>
+            </div>
+          </div>
+        {% endfor %}
+
+        {% if not excuses %}
+          <div class="empty">لا توجد أعذار حالياً.</div>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function applyFilters(){
+      const name = (document.getElementById('qName').value || '').toLowerCase().trim();
+      const status = document.getElementById('qStatus').value || '';
+      const grade = document.getElementById('qGrade').value || '';
+
+      document.querySelectorAll('.ex-row').forEach(row=>{
+        const rName = (row.dataset.name || '').toLowerCase();
+        const rStatus = row.dataset.status || '';
+        const rGrade = row.dataset.grade || '';
+
+        const okName = rName.includes(name);
+        const okStatus = (status === '' || status === rStatus);
+        const okGrade = (grade === '' || rGrade.includes(grade));
+
+        row.style.display = (okName && okStatus && okGrade) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

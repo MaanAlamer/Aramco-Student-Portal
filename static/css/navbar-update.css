@@ -1,0 +1,41 @@
+/* ====== تحديث شعار النافبار - 200px مع تمركز مثالي ====== */
+
+/* زيادة ارتفاع النافبار لاستيعاب الشعار الكبير */
+.student-navbar {
+    height: 220px !important; /* يكبر البوردور عشان يستوعب شعار 200px */
+}
+
+/* تنسيق الشعار بحجم 200px مع تمركز مثالي */
+.student-navbar-logo {
+    height: 200px !important;     /* حجم الشعار */
+    width: auto !important;
+    object-fit: contain;
+    margin-top: -20px;     /* ارفع الشعار للأعلى */
+    margin-bottom: -10px;  /* خله بالنص بالضبط */
+    display: block !important;
+}
+
+/* تحديثات للتجاوب مع الجوال */
+@media (max-width: 1024px) {
+  .student-navbar {
+    height: 180px !important;
+  }
+  
+  .student-navbar-logo {
+    height: 160px !important;
+    margin-top: -15px;
+    margin-bottom: -5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .student-navbar {
+    height: 140px !important;
+  }
+  
+  .student-navbar-logo {
+    height: 120px !important;
+    margin-top: -10px;
+    margin-bottom: 0;
+  }
+}

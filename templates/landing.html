@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أكاديمية التقدم | Advantage Academy</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}">
+
+  <!-- Font Awesome للأيقونات -->
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- ملف التنسيقات الخاص بالواجهة -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-container">
+      <div class="logo">
+        <div class="logo-icon-wrapper">
+          <!-- شعار أكاديمية التقدم -->
+           <img src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}"
+             alt="Advantage Academy Logo">
+        </div>
+        <div class="logo-text">
+          <h1>أكاديمية التقدم</h1>
+          <p>Advantage Academy</p>
+        </div>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#home">الرئيسية</a></li>
+        <li><a href="#services">البرامج والخدمات</a></li>
+        <li><a href="#about">من نحن</a></li>
+        <li><a href="#consultation">استشارة مجانية</a></li>
+        <li><a href="#contact">اتصل بنا</a></li>
+      </ul>
+
+      <div class="auth-buttons">
+        <a href="{{ url_for('login') }}" class="btn btn-outline">تسجيل الدخول</a>
+  <a href="{{ url_for('register_student') }}" class="btn btn-primary">التسجيل متاح الآن</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <h1>تعلم يفتح لك أبواب المستقبل</h1>
+        <p>
+          أكاديمية التقدم منصة تعليمية حديثة تقدم دورات وبرامج نوعية
+          في بيئة رقمية تفاعلية، تحت إشراف نخبة من المدربين
+          والخبراء، وبشراكات استراتيجية مع جهات رائدة.
+        </p>
+        <a href="#consultation" class="btn btn-primary">احجز استشارة تعليمية مجانية</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Consultation Section -->
+  <section class="section consultation" id="consultation">
+    <div class="container">
+      <div class="consultation-content">
+        <div class="consultation-text">
+          <h2>استشارة تعليمية مخصصة لك</h2>
+          <p>
+            ساعدنا آلاف المتعلمين على اختيار المسار التعليمي الأنسب لهم،
+            سواء في اللغات، أو المهارات الرقمية، أو الإعداد الجامعي والمهني.
+          </p>
+          <p>
+            احجز جلستك المجانية مع مستشارينا التعليميين لتحديد
+            أهدافك وبناء خطة تعلم تناسب وقتك واهتماماتك.
+          </p>
+          <a href="#contact" class="btn btn-outline">تواصل معنا لمزيد من التفاصيل</a>
+        </div>
+
+        <div class="consultation-form">
+          <h3>نموذج حجز استشارة</h3>
+          <form id="consultationForm" method="post">
+            <div class="form-group">
+              <label for="firstName">الاسم الأول</label>
+              <input type="text" id="firstName" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="lastName">اسم العائلة</label>
+              <input type="text" id="lastName" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">البريد الإلكتروني</label>
+              <input type="email" id="email" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">رقم الجوال</label>
+              <input type="tel" id="phone" class="form-control">
+            </div>
+
+            <div class="form-options">
+              <input type="checkbox" id="newsletter">
+              <label for="newsletter">أرغب في استقبال جديد البرامج والعروض</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              احجز الاستشارة
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="section services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <h2>برامج وخدمات الأكاديمية</h2>
+        <p>
+          نقدم باقة من البرامج التعليمية المصممة بعناية لتناسب
+          احتياجات الطلاب والطالبات في مجالات متعددة.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div class="service-content">
+            <h3>الدورات الاحترافية</h3>
+            <p>
+              برامج مكثفة في المهارات الرقمية، وإدارة الأعمال،
+              وتحليل البيانات، وغيرها من المجالات المطلوبة في سوق العمل.
+            </p>
+            <a href="#" class="btn btn-outline">استعراض الدورات</a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-laptop"></i>
+          </div>
+          <div class="service-content">
+            <h3>التعلم عن بعد</h3>
+            <p>
+              منصة تعليمية إلكترونية تتيح لك حضور المحاضرات
+              والتفاعل مع المدربين من أي مكان وفي أي وقت.
+            </p>
+            <a href="#" class="btn btn-outline">جرّب المنصة</a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-language"></i>
+          </div>
+          <div class="service-content">
+            <h3>مركز اللغات</h3>
+            <p>
+              دورات معتمدة في اللغة الإنجليزية ولغات أخرى،
+              مع تركيز على مهارات التواصل الفعّال والاختبارات الدولية.
+            </p>
+            <a href="#" class="btn btn-outline">سجّل الآن</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>عن أكاديمية التقدم</h2>
+          <p>
+            أكاديمية التقدم مبادرة تعليمية تهدف إلى تمكين المتعلمين
+            من اكتساب مهارات المستقبل، من خلال بيئة تعليمية
+            رقمية، ومحتوى تفاعلي، وكوادر تدريبية متميزة.
+          </p>
+          <p>
+            نسعى لخلق تجربة تعلم تجمع بين المتعة والعمق العلمي،
+            مع متابعة مستمرة لنتائج المتدربين ودعم مسارهم الأكاديمي والمهني.
+          </p>
+          <a href="{{ url_for('about_academy') }}" class="btn btn-primary">
+            تعرف أكثر على رؤيتنا ورسالتنا
+          </a>
+        </div>
+
+        <div class="about-image">
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1471&q=80"
+             alt="عن الأكاديمية">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <h2>تواصل معنا</h2>
+        <p>
+          لديك استفسار أو ترغب بالتعاون معنا؟
+          اترك لنا بياناتك وسيتواصل معك فريق الأكاديمية في أقرب وقت.
+        </p>
+      </div>
+
+      <div class="contact-content">
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-details">
+              <h3>الموقع</h3>
+              <p>الرياض – المملكة العربية السعودية</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="contact-details">
+              <h3>هاتف</h3>
+              <p>+966 12 345 6789</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-details">
+              <h3>البريد الإلكتروني</h3>
+              <p>info@advantageacademy.sa</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="contact-details">
+              <h3>ساعات العمل</h3>
+              <p>الأحد – الخميس: 8 صباحًا حتى 5 مساءً</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="consultation-form">
+          <h3>نموذج التواصل</h3>
+          <form id="contactForm" method="post">
+            <div class="form-group">
+              <label for="contactFirstName">الاسم الأول</label>
+              <input type="text" id="contactFirstName"
+                   class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contactLastName">اسم العائلة</label>
+              <input type="text" id="contactLastName"
+                   class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contactEmail">البريد الإلكتروني</label>
+              <input type="email" id="contactEmail"
+                   class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="message">الرسالة</label>
+              <textarea id="message" class="form-control"
+                    rows="5" required></textarea>
+            </div>
+
+            <div class="form-options">
+              <input type="checkbox" id="contactNewsletter">
+              <label for="contactNewsletter">
+                أرغب في استقبال جديد الأكاديمية
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              إرسال الرسالة
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-col">
+          <h3>أكاديمية التقدم</h3>
+          <p>
+            نعمل على تقديم تجربة تعلم عصرية ومتكاملة
+            تدعم طلابنا في رحلتهم نحو التميز الأكاديمي والمهني.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-x-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>روابط سريعة</h3>
+          <ul class="footer-links">
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#services">البرامج والخدمات</a></li>
+            <li><a href="#about">عن الأكاديمية</a></li>
+            <li><a href="#consultation">استشارة مجانية</a></li>
+            <li><a href="#contact">تواصل معنا</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>الخدمات</h3>
+          <ul class="footer-links">
+            <li><a href="#">الدورات الاحترافية</a></li>
+            <li><a href="#">التعلم عن بعد</a></li>
+            <li><a href="#">مركز اللغات</a></li>
+            <li><a href="#">الاستشارات الأكاديمية</a></li>
+            <li><a href="#">التوجيه المهني</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>تواصل مباشر</h3>
+          <ul class="footer-links">
+            <li><a href="#"><i class="fas fa-phone"></i> +966 12 345 6789</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> info@advantageacademy.sa</a></li>
+            <li><a href="#"><i class="fas fa-map-marker-alt"></i> الرياض – المملكة العربية السعودية</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>جميع الحقوق محفوظة &copy; {{ 2025 }} أكاديمية التقدم – Advantage Academy</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="{{ url_for('static', filename='js/landing.js') }}"></script>
+</body>
+</html>

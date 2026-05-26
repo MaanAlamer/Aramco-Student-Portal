@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>تسجيل طالب جديد</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="container">
+  <div class="card" style="max-width:520px;margin:28px auto;padding:22px">
+    <h2 style="margin:0 0 10px 0;text-align:center">تسجيل طالب جديد</h2>
+    {% if error %}<div class="error">{{ error }}</div>{% endif %}
+    <form method="post">
+      <label>رقم الهوية</label>
+      <input name="national_id" required>
+      <label style="margin-top:10px">كلمة المرور الجديدة</label>
+      <input name="password" type="password" required>
+      <label style="margin-top:10px">تأكيد كلمة المرور</label>
+      <input name="password2" type="password" required>
+      <div style="display:flex;gap:8px;justify-content:space-between;margin-top:16px">
+        <button class="btn" type="submit">إنشاء الحساب</button>
+        <a class="btn secondary" href="{{ url_for('login') }}" style="text-decoration:none">رجوع</a>
+      </div>
+      <p style="margin-top:10px;color:var(--muted);font-size:13px">
+        لدي حساب بالفعل؟ <a href="{{ url_for('login') }}">الرجوع إلى تسجيل الدخول</a>
+      </p>
+    </form>
+  </div>
+</body>
+</html>

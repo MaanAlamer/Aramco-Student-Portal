@@ -1,0 +1,1008 @@
+
+/* إلغاء المساحات البيضاء حول الصفحة */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Tajawal", "Cairo", system-ui, -apple-system, sans-serif;
+  background: #020617;
+  color: #f8fafc;
+  direction: rtl;
+}
+
+/* لو عندك كونتينر رئيسي للطالب مثل .student-shell أو .student-layout خله فل ويدث */
+.student-shell,
+.student-layout {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  border-radius: 0;      /* لو كنت حاب الحواف المستديرة برا، احذف هذا السطر */
+}
+
+/* شريط التنقل العلوي – واجهة الطالب */
+.student-navbar {
+  direction: rtl;
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  height: 100px; /* يكبر البوردور عشان يستوعب شعار 200px */
+  background: linear-gradient(90deg, #050816 0%, #07152b 50%, #050816 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* الشعار فقط (بدون كتابة) */
+.student-navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.student-navbar-logo {
+  width: 200px;   /* زي ما طلبت */
+  height: auto;
+  display: block;
+}
+
+/* عناصر القائمة تكون قريبة من الشعار من جهة اليمين */
+.student-navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 40px;          /* المسافة بين الروابط */
+  margin-right: 32px; /* المسافة بين الشعار وأول عنصر */
+  font-family: "Tajawal", system-ui, sans-serif;
+  font-size: 1.05rem;
+}
+
+/* الروابط */
+.student-navbar .nav-link {
+  color: #f5f6ff;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 6px;
+  transition: color 0.2s ease;
+}
+
+.student-navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: #5b6bff; /* لون أزرق من ألوان الأكاديمية */
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.student-navbar .nav-link:hover {
+  color: #ffffff;
+}
+
+.student-navbar .nav-link:hover::after,
+.student-navbar .nav-link.active::after {
+  width: 100%;
+}
+
+.student-navbar .logout-link {
+  color: #ff6b6b;
+}
+
+/* قسم الهيرو – صورة الكتاب تكون أوضح وتغطي بالكامل */
+.student-hero {
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+  background-image: url('../assets/book.jpg');
+  background-size: cover;        /* تغطي كامل المساحة */
+  background-position: center;   /* وسط الصورة */
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+}
+
+/* طبقة التعتيم فوق الصورة – خففتها عشان الصورة تبان أكثر */
+.student-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(5, 8, 22, 0.82),
+    rgba(9, 17, 38, 0.78)
+  );
+}
+
+/* محتوى الهيرو فوق الصورة */
+.student-hero-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 0 60px;
+}
+
+.hero-text-right {
+  max-width: 600px;
+  text-align: right;
+}
+
+.hero-eyebrow {
+  font-size: 1.1rem;
+  color: #a5b4fc;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 20px 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  line-height: 1.1;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #e2e8f0;
+  line-height: 1.7;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* منطقة المحتوى الرئيسي */
+.student-main-content {
+  margin-top: 80px; /* مسافة مناسبة للنافبار الثابت */
+  padding: 40px 32px;
+}
+
+.student-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  color: #f9fafb;
+  min-height: 100vh;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  direction: rtl;
+}
+
+/* الهيدر */
+.student-page .student-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.student-page .header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.student-page .header-logo {
+  width: 72px;
+  height: auto;
+  filter: drop-shadow(0 0 10px rgba(15, 23, 42, 0.9));
+}
+
+.student-page .header-academy-name {
+  color: #e5e7eb;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.student-page .header-left {
+  text-align: left;
+}
+
+.student-page .welcome-text {
+  margin: 0;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.student-page .student-name {
+  margin: 0;
+  font-size: 26px;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* الكروت */
+.student-page .grid-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.student-page .card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6));
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 24px;
+  padding: 24px 28px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.student-page .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+}
+
+.student-page .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.student-page .card-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.student-page .badge {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.student-page .badge-green {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+/* كرت الحضور */
+.student-page .attendance-main {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.student-page .percentage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.student-page .percentage .value {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, #a5b4fc, #c7d2fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.student-page .percentage .label {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.student-page .days-list {
+  flex: 1;
+  display: grid;
+  gap: 8px;
+}
+
+.student-page .day-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 60px;
+  gap: 12px;
+  align-items: center;
+  font-size: 14px;
+}
+
+.student-page .bar {
+  background: rgba(148, 163, 184, 0.2);
+  height: 6px;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.student-page .bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.student-page .day-value {
+  color: #94a3b8;
+  text-align: left;
+  font-weight: 500;
+}
+
+/* كرت النقاط */
+.student-page .points-main {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.student-page .points-total {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.student-page .points-number {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.student-page .points-label {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.student-page .points-list {
+  flex: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.student-page .points-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(148, 163, 184, 0.05);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.student-page .pill {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* الجدول */
+.student-page .schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.student-page .schedule-table th,
+.student-page .schedule-table td {
+  padding: 12px 8px;
+  text-align: right;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.student-page .schedule-table th {
+  background: rgba(148, 163, 184, 0.05);
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.student-page .schedule-table td {
+  color: #e2e8f0;
+}
+
+/* التنبيهات */
+.student-page .notice-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.student-page .notice-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.student-page .notice-title {
+  color: #f1f5f9;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.student-page .notice-meta {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+/* تجاوب للجوال والتابلت */
+@media (max-width: 1024px) {
+  .student-navbar {
+    padding: 0 40px;
+    height: 70px;
+  }
+  
+  .student-navbar-logo {
+    height: 60px;
+  }
+  
+  .student-navbar-left {
+    gap: 25px;
+    font-size: 0.95rem;
+  }
+  
+  .student-main-content {
+    margin-top: 70px;
+  }
+  
+  .hero-title {
+    font-size: 2.8rem;
+  }
+  
+  .student-hero {
+    height: 300px;
+  }
+  
+  .student-hero-content {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .student-navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
+    gap: 15px;
+  }
+  
+  .student-navbar-logo {
+    height: 50px;
+  }
+  
+  .student-navbar-left {
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 0.9rem;
+  }
+  
+  .student-main-content {
+    margin-top: 100px;
+  }
+  
+  .student-hero {
+    height: 250px;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .student-hero-content {
+    padding: 0 20px;
+  }
+  
+  .student-main-content {
+    padding: 20px 16px;
+  }
+
+  .student-page {
+    padding: 16px;
+  }
+
+  .student-page .grid-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .student-page .header-left {
+    text-align: center;
+  }
+
+  .student-page .attendance-main {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .student-page .day-row {
+    grid-template-columns: 80px 1fr 50px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .student-navbar-left {
+    gap: 15px;
+    font-size: 0.85rem;
+  }
+
+  .student-page .card {
+    padding: 16px 18px;
+  }
+
+  .student-page .header-logo {
+    width: 60px;
+  }
+
+  .student-page .student-name {
+    font-size: 22px;
+  }
+
+  .student-page .percentage .value {
+    font-size: 32px;
+  }
+
+  .student-page .points-number {
+    font-size: 28px;
+  }
+
+  .student-page .schedule-table {
+    font-size: 12px;
+  }
+
+  .student-page .schedule-table th,
+  .student-page .schedule-table td {
+    padding: 6px 4px;
+  }
+}
+.student-shell,
+.student-layout {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  border-radius: 0;      /* لو كنت حاب الحواف المستديرة برا، احذف هذا السطر */
+}
+
+/* شريط التنقل العلوي – واجهة الطالب */
+.student-navbar {
+  direction: rtl;
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  height: 100px; /* يكبر البوردور عشان يستوعب شعار 200px */
+  background: linear-gradient(90deg, #050816 0%, #07152b 50%, #050816 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* الشعار فقط (بدون كتابة) */
+.student-navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.student-navbar-logo {
+  width: 200px;   /* زي ما طلبت */
+  height: auto;
+  display: block;
+}
+
+/* عناصر القائمة تكون قريبة من الشعار من جهة اليمين */
+.student-navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 40px;          /* المسافة بين الروابط */
+  margin-right: 32px; /* المسافة بين الشعار وأول عنصر */
+  font-family: "Tajawal", system-ui, sans-serif;
+  font-size: 1.05rem;
+}
+
+/* الروابط */
+.student-navbar .nav-link {
+  color: #f5f6ff;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 6px;
+  transition: color 0.2s ease;
+}
+
+.student-navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: #5b6bff; /* لون أزرق من ألوان الأكاديمية */
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.student-navbar .nav-link:hover {
+  color: #ffffff;
+}
+
+.student-navbar .nav-link:hover::after,
+.student-navbar .nav-link.active::after {
+  width: 100%;
+}
+
+.student-navbar .logout-link {
+  color: #ff6b6b;
+}
+
+/* قسم الهيرو – صورة الكتاب تكون أوضح وتغطي بالكامل */
+.student-hero {
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+  background-image: url('../assets/book.jpg');
+  background-size: cover;        /* تغطي كامل المساحة */
+  background-position: center;   /* وسط الصورة */
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+}
+
+/* طبقة التعتيم فوق الصورة – خففتها عشان الصورة تبان أكثر */
+.student-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(5, 8, 22, 0.82),
+    rgba(9, 17, 38, 0.78)
+  );
+}
+
+/* محتوى الهيرو فوق الصورة */
+.student-hero-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 0 60px;
+}
+
+.hero-text-right {
+  max-width: 600px;
+  text-align: right;
+}
+
+.hero-eyebrow {
+  font-size: 1.1rem;
+  color: #a5b4fc;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 20px 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  line-height: 1.1;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #e2e8f0;
+  line-height: 1.7;
+  font-weight: 400;
+  margin: 0;
+}
+  background: linear-gradient(135deg, #a5b4fc, #c7d2fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* الشبكة الرئيسية */
+.student-page .student-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.student-page .grid-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+}
+
+/* الكروت */
+.student-page .card {
+  background: radial-gradient(circle at top left, #111827 0%, #020617 60%);
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  padding: 20px 24px;
+  box-sizing: border-box;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.student-page .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.student-page .card-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #f9fafb;
+}
+
+.student-page .badge {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  font-size: 11px;
+  color: #e5e7eb;
+  background: rgba(148, 163, 184, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+.student-page .badge-green {
+  border-color: #16a34a;
+  color: #bbf7d0;
+  background: rgba(34, 197, 94, 0.15);
+}
+
+/* كرت الحضور */
+.student-page .attendance-main {
+  display: flex;
+  gap: 24px;
+}
+
+.student-page .percentage {
+  min-width: 120px;
+  text-align: center;
+}
+
+.student-page .percentage .value {
+  display: block;
+  font-size: 40px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.student-page .percentage .label {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.student-page .days-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.student-page .day-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 60px;
+  align-items: center;
+  font-size: 13px;
+  gap: 12px;
+}
+
+.student-page .bar {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: #111827;
+  overflow: hidden;
+  border: 1px solid rgba(31, 41, 55, 0.8);
+}
+
+.student-page .bar-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  box-shadow: 0 0 8px rgba(79, 70, 229, 0.4);
+}
+
+.student-page .day-value {
+  text-align: left;
+  color: #a5b4fc;
+  font-weight: 500;
+}
+
+/* كرت النقاط */
+.student-page .points-main {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.student-page .points-total {
+  text-align: center;
+}
+
+.student-page .points-number {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.student-page .points-label {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.student-page .points-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.student-page .points-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 4px 0;
+}
+
+.student-page .pill {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: rgba(79, 70, 229, 0.2);
+  color: #c7d2fe;
+  border: 1px solid rgba(79, 70, 229, 0.4);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* جدول اليوم */
+.student-page .schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.student-page .schedule-table th,
+.student-page .schedule-table td {
+  padding: 8px 6px;
+  border-bottom: 1px solid rgba(31, 41, 55, 0.8);
+  text-align: right;
+}
+
+.student-page .schedule-table th {
+  color: #9ca3af;
+  font-weight: 500;
+  border-bottom-color: rgba(148, 163, 184, 0.4);
+}
+
+.student-page .schedule-table tbody tr:hover {
+  background: rgba(79, 70, 229, 0.05);
+}
+
+/* التنبيهات */
+.student-page .notice-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.student-page .notice-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(31, 41, 55, 0.6);
+}
+
+.student-page .notice-list li:last-child {
+  border-bottom: none;
+}
+
+.student-page .notice-title {
+  display: block;
+  font-size: 14px;
+  color: #f9fafb;
+  line-height: 1.4;
+}
+
+.student-page .notice-meta {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+/* استجابة */
+@media (max-width: 1024px) {
+  .student-page {
+    padding: 24px 16px;
+  }
+
+  .student-page .grid-row {
+    grid-template-columns: 1fr;
+  }
+
+  .student-page .student-header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .student-page .header-left {
+    text-align: center;
+  }
+
+  .student-page .attendance-main {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .student-page .day-row {
+    grid-template-columns: 80px 1fr 50px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .student-page {
+    padding: 16px;
+  }
+
+  .student-page .card {
+    padding: 16px 18px;
+  }
+
+  .student-page .header-logo {
+    width: 60px;
+  }
+
+  .student-page .student-name {
+    font-size: 22px;
+  }
+
+  .student-page .percentage .value {
+    font-size: 32px;
+  }
+
+  .student-page .points-number {
+    font-size: 28px;
+  }
+
+  .student-page .schedule-table {
+    font-size: 12px;
+  }
+
+}
+
+

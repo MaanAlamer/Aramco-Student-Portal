@@ -1,0 +1,373 @@
+/* ========== إعدادات عامة لواجهة الطالب ========== */
+
+body.student-layout {
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+    font-family: "Tajawal", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #040814;
+    color: #f7f8ff;
+}
+
+/* الشريط العلوي */
+
+.student-navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 50;
+    background: linear-gradient(90deg, #040814, #07152b);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65);
+}
+
+.student-nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* روابط النافبار من اليمين لليسار */
+
+.student-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    font-size: 1.05rem;
+}
+
+.student-nav-links .nav-link {
+    position: relative;
+    text-decoration: none;
+    color: #e3e7ff;
+    padding-bottom: 4px;
+    transition: color 0.2s ease;
+}
+
+.student-nav-links .nav-link:hover {
+    color: #ffffff;
+}
+
+.student-nav-links .nav-link::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    border-radius: 99px;
+    background: transparent;
+    transition: background 0.2s ease;
+}
+
+.student-nav-links .nav-link.active::after,
+.student-nav-links .nav-link:hover::after {
+    background: #5b5cfb;
+}
+
+.student-nav-links .logout-link {
+    color: #ff4b5c;
+}
+
+/* الشعار – داخل صندوق أكبر عشان نقدر نكبره ونوسّطه عمودياً */
+
+.student-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.student-logo-box {
+    width: 200px;          /* البوردور ~200px زي ما طلبت */
+    height: 72px;
+    display: flex;
+    align-items: center;   /* يوسّط الشعار عمودياً */
+    justify-content: center;
+}
+
+.student-logo {
+    max-height: 64px;
+    max-width: 100%;
+    display: block;
+}
+
+/* قسم الهيرو */
+
+.student-hero {
+    position: relative;
+    margin-top: 80px;      /* مساحة تحت النافبار الثابت */
+    min-height: 260px;
+    overflow: hidden;
+}
+
+.student-hero .hero-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* تغطية وتدرج فوق الصورة */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at left, rgba(36, 59, 114, 0.75) 0, rgba(4, 8, 20, 0.95) 55%);
+}
+
+/* محتوى الهيرو */
+
+.hero-content {
+    position: absolute;
+    inset: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: #ffffff;
+}
+
+.hero-welcome {
+    font-size: 0.95rem;
+    margin: 0 0 0.35rem;
+    color: #b5c0ff;
+}
+
+.hero-title {
+    font-size: 2.4rem;
+    margin: 0 0 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: 0.98rem;
+    max-width: 450px;
+    line-height: 1.8;
+    color: #d6dcff;
+}
+
+/* المحتوى الرئيسي والبطاقات */
+
+.student-main {
+    max-width: 1200px;
+    margin: 32px auto 48px;
+    padding: 0 32px;
+}
+
+.cards-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.student-card {
+    background: radial-gradient(circle at top left, #181d35, #050814);
+    border-radius: 24px;
+    padding: 24px 26px;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.65);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.student-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.75);
+}
+
+/* عناوين البطاقات */
+
+.card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.card-subtitle {
+    margin: 4px 0 14px;
+    font-size: 0.9rem;
+    color: #a8b0d9;
+}
+
+/* البادجات */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+}
+
+.badge-success {
+    background: rgba(0, 186, 136, 0.16);
+    color: #3dd6a2;
+}
+
+/* بطاقة النقاط */
+
+.points-value {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.points-label {
+    margin-top: 4px;
+    margin-bottom: 16px;
+    color: #aeb6e6;
+}
+
+.points-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(91, 92, 251, 0.16);
+    color: #d6d7ff;
+    font-size: 0.8rem;
+}
+
+/* بطاقة الحضور */
+
+.attendance-week {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.attendance-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 50px;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.day-label {
+    color: #d6dcff;
+}
+
+.progress-bar {
+    position: relative;
+    height: 6px;
+    border-radius: 999px;
+    background: #11172c;
+    overflow: hidden;
+}
+
+.progress-fill {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #5b5cfb, #8f7bff);
+}
+
+.day-value {
+    text-align: left;
+    color: #e3e7ff;
+}
+
+.attendance-summary {
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 0.9rem;
+    color: #b8c0f0;
+}
+
+.attendance-percent {
+    color: #5b5cfb;
+    font-weight: 600;
+}
+
+/* جدول حصص اليوم */
+
+.simple-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.simple-table th,
+.simple-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.simple-table th {
+    color: #aeb6e6;
+    font-weight: 500;
+}
+
+.simple-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* التنبيهات */
+
+.notifications-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notifications-list li h3 {
+    margin: 0 0 4px;
+    font-size: 0.98rem;
+}
+
+.notifications-list li p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #b0b7e0;
+}
+
+.note-time {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 0.8rem;
+    color: #8a94c9;
+}
+
+/* استجابة الشاشات الصغيرة */
+
+@media (max-width: 900px) {
+    .student-nav-inner {
+        padding-inline: 16px;
+    }
+
+    .student-nav-links {
+        gap: 16px;
+        font-size: 0.9rem;
+    }
+
+    .student-main {
+        padding-inline: 16px;
+    }
+
+    .cards-row {
+        grid-template-columns: 1fr;
+    }
+}

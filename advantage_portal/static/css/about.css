@@ -1,0 +1,69 @@
+/* About page styles (scoped under .about-page) */
+.about-page{font-family:inherit;color:#222}
+
+/* Variables (brand colors) */
+:root{
+  --aa-main:#3c467b;
+  --aa-grad-start:#50589c;
+  --aa-grad-end:#6b6eec;
+  --aa-accent:#6E8CFB;
+  --aa-bg:#f5f6fa;
+}
+
+.about-hero{position:relative;min-height:62vh;display:flex;align-items:flex-end;padding:0;margin:0;overflow:hidden}
+.about-hero-bg{position:absolute;inset:0;background-image:linear-gradient(180deg, rgba(28,38,88,0.55), rgba(60,70,123,0.4)), url('../assets/buldingoffaa.png');background-size:cover;background-position:center;filter:contrast(1.03);}
+.about-hero-inner{position:relative;padding:48px 0 56px;display:flex;justify-content:flex-end}
+.hero-text{max-width:720px;text-align:right;padding-right:24px}
+.hero-main{color:#fff;font-size:44px;margin:0 0 8px 0;font-weight:800}
+.hero-breadcrumb{color:rgba(255,255,255,0.85);font-size:14px}
+
+/* Intro */
+.about-intro{padding:80px 0}
+.intro-grid{display:grid;grid-template-columns:1fr 560px;gap:28px;align-items:center}
+.intro-right{text-align:right}
+.eyebrow{color:#777;font-size:14px;margin-bottom:10px}
+.intro-title{color:var(--aa-main);font-size:34px;margin:0 0 6px;font-weight:800}
+.intro-sub{color:#666;margin-bottom:18px}
+.intro-text{color:#333;line-height:1.8}
+.intro-left .intro-image{width:100%;height:360px;border-radius:12px;background-image:url('../assets/buldingoffaa.png');background-size:cover;background-position:center;box-shadow:0 12px 30px rgba(15,26,43,.06)}
+
+/* Mission & Vision */
+.about-mv{background:var(--aa-bg);padding:64px 0}
+.mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.mv-card{background:#fff;border-radius:12px;padding:24px;box-shadow:0 10px 30px rgba(15,26,43,.06);text-align:right}
+.mv-icon{font-size:28px;margin-bottom:8px}
+.mv-card h3{color:var(--aa-main);margin:0}
+.mv-sub{color:#666;margin-bottom:10px}
+
+/* Goals */
+.about-goals{padding:80px 0}
+.section-title{text-align:center;color:var(--aa-main);font-size:28px;margin-bottom:12px}
+.section-sub{display:block;color:#666;font-size:14px}
+.goals-grid{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center}
+.goals-list{list-style:none;padding:0;margin:0}
+.goals-list li{padding:12px 0;border-bottom:1px dashed #eee;display:flex;align-items:flex-start;justify-content:flex-start;gap:12px}
+.goal-icon{color:var(--aa-accent);font-size:18px;margin-left:8px}
+.goals-image{width:100%;height:320px;border-radius:12px;background-image:url('../assets/aa_hero.jpg');background-size:cover;background-position:center;box-shadow:0 12px 30px rgba(15,26,43,.06)}
+
+/* Stats strip */
+.about-stats-strip{position:relative;padding:42px 0;margin-top:40px;overflow:hidden}
+.about-stats-strip .stats-bg{position:absolute;inset:0;background-image:linear-gradient(180deg, rgba(28,38,88,0.6), rgba(28,38,88,0.6)), url('../assets/buldingoffaa.png');background-size:cover;background-position:center;opacity:0.95}
+.about-stats-strip .stats-inner{position:relative;padding:28px 0}
+.stats-cards{display:flex;gap:18px;justify-content:space-between}
+.stat{flex:1;background:transparent;color:#fff;text-align:center;padding:18px}
+.stat-num{font-size:28px;font-weight:800;color:#fff}
+.stat-label{color:rgba(255,255,255,0.9);margin-top:8px}
+
+/* Responsiveness */
+@media (max-width: 1000px){
+  .intro-grid{grid-template-columns:1fr}
+  .goals-grid{grid-template-columns:1fr}
+  .mv-grid{grid-template-columns:1fr}
+  .stats-cards{flex-direction:column;align-items:center}
+  .about-hero-inner{justify-content:center;padding:36px 0}
+  .hero-main{font-size:28px}
+  .intro-left .intro-image{height:240px}
+}
+
+/* small helpers */
+.container{max-width:1100px;margin:0 auto;padding:0 20px}

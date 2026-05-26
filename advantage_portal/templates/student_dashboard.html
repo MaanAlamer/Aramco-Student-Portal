@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>لوحة الطالب | أكاديمية التقدم</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/student_dashboard.css') }}">
+</head>
+<body class="student-page">
+
+  <!-- شريط علوي + هيرو -->
+  <header class="student-hero" id="home-section">
+
+    <!-- الخلفية مع الطبقة الزرقاء -->
+    <div class="student-hero-bg">
+      <img src="{{ url_for('static', filename='assets/book.jpg') }}" alt="خلفية طالب يقرأ" class="student-hero-image">
+      <div class="student-hero-overlay"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <div class="student-navbar">
+      <div class="right-section">
+        <img src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}" class="student-logo" alt="logo">
+      </div>
+
+      <div class="left-section">
+        <a href="{{ url_for('student_dashboard') }}" class="nav-link active">الرئيسية</a>
+        <a href="{{ url_for('student_schedule') }}" class="nav-link">الجدول الدراسي</a>
+        <a href="{{ url_for('student_attendance') }}" class="nav-link">الحضور والغياب</a>
+        <a href="{{ url_for('student_points') }}" class="nav-link">نقاطك</a>
+        <a href="{{ url_for('student_events') }}" class="nav-link">الفعاليات</a>
+
+        <!-- ✅ جديد: صفحة رفع العذر -->
+        <a href="{{ url_for('student_excuses') }}" class="nav-link">رفع عذر</a>
+
+        <a href="/logout" class="nav-link logout">تسجيل الخروج</a>
+      </div>
+    </div>
+
+    <!-- محتوى الترحيب فوق الصورة -->
+    <div class="student-hero-content">
+      <p class="student-welcome">
+        مرحباً بك، <span>{{ student_name or 'student2025' }}</span>
+      </p>
+      <h1 class="student-hero-title">لوحة الطالب</h1>
+      <p class="student-hero-subtitle">
+        هنا يمكنك متابعة جدولك الدراسي، حضورك وغيابك، ونقاطك الأسبوعية في الأكاديمية.
+      </p>
+    </div>
+  </header>
+
+  <!-- هنا تبدأ باقي محتويات لوحة الطالب -->
+  <main class="student-main">
+
+    <!-- بطاقة من نحن -->
+    <section class="aa-about-section" id="about-section">
+
+      <!-- كرت 1: من نحن -->
+      <div class="aa-about-card aa-about-main">
+        <p class="aa-about-kicker">من نحن</p>
+        <h2 class="aa-about-title">أكاديمية التقدّم – Advantage Academy</h2>
+        <p class="aa-about-lead">
+          أكاديمية التقدّم هي أكاديمية تعليمية غير ربحيّة تستهدف طلاب وطالبات المرحلة
+          الثانوية، وتركّز على تطوير مهاراتهم الأكاديمية والشخصية بشكل متوازن. نعمل
+          على تعزيز مهارات اللغة الإنجليزية والرياضيات، مع بناء
+          الثقة بالنفس، وتحفيز التفكير النقدي، والعمل الجماعي، والاستعداد للمرحلة
+          الجامعية وسوق العمل.
+        </p>
+      </div>
+
+      <!-- كرت 2: ماذا نقدّم + رؤيتنا -->
+      <div class="aa-about-card aa-about-details">
+
+        <div class="aa-about-block">
+          <h3 class="aa-about-subtitle">ماذا نقدّم لطلابنا؟</h3>
+          <ul class="aa-about-list">
+            <li>حصص تفاعلية مركّزة في اللغة الإنجليزية والرياضيات بطرق حديثة وممتعة.</li>
+            <li>برامج وأنشطة تعزّز ثقة الطالب بنفسه وتساعده على التعبير والحوار بثقة.</li>
+            <li>متابعة أسبوعية للحضور والإنجاز، مع تقارير توضح مستوى التقدّم للطالب وولي الأمر.</li>
+            <li>دعم مهارات الطالب الأكاديمية والشخصية ليكون مستعدًا للجامعة وسوق العمل.</li>
+          </ul>
+        </div>
+
+        <div class="aa-about-block">
+          <h3 class="aa-about-subtitle">رؤيتنا</h3>
+          <p class="aa-about-paragraph">
+            أن تكون أكاديمية التقدّم نموذجًا تعليمياً يقدّم فرصًا حقيقية لطلاب وطالبات
+            المرحلة الثانوية ليحققوا أفضل ما لديهم، من خلال تعليم نوعي، واهتمام فردي،
+            وبيئة تحفيزية آمنة، مرتبطة برؤية المملكة 2030، تركّز على بناء طالب واثق،
+            واعٍ، ومؤثر في مجتمعه.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- الإحصائيات في الأسفل بنفس التصميم -->
+      <div class="aa-stats-row">
+
+        <div class="aa-stat-card">
+          <div class="aa-stat-icon">🎓</div>
+          <div class="aa-stat-number" data-target="250">0</div>
+          <div class="aa-stat-label">طالب وطالبة مستفيدون</div>
+        </div>
+
+        <div class="aa-stat-card">
+          <div class="aa-stat-icon">👨‍🏫</div>
+          <div class="aa-stat-number" data-target="30">0</div>
+          <div class="aa-stat-label">معلم ومعلمة متعاونون</div>
+        </div>
+
+        <div class="aa-stat-card">
+          <div class="aa-stat-icon">🏢</div>
+          <div class="aa-stat-number" data-target="4">0</div>
+          <div class="aa-stat-label">فروع الأكاديمية في المملكة</div>
+        </div>
+
+      </div>
+
+      <!-- كرت مواقع الفروع -->
+      <div class="aa-branches-card">
+        <h3 class="aa-branches-title">مواقع فروع أكاديمية التقدّم</h3>
+        <div class="aa-branches-chips">
+          <span class="chip">الرياض</span>
+          <span class="chip">جدة</span>
+          <span class="chip">الظهران</span>
+          <span class="chip">الأحساء</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- سكربت العد التصاعدي للإحصائيات -->
+  <script>
+    const statNumbers = document.querySelectorAll('.aa-stat-number[data-target]');
+    statNumbers.forEach(stat => {
+      const updateCount = () => {
+        const target = +stat.getAttribute('data-target');
+        const count = +stat.innerText;
+        const increment = target / 200;
+        if (count < target) {
+          stat.innerText = Math.ceil(count + increment);
+          setTimeout(updateCount, 10);
+        } else {
+          stat.innerText = target;
+        }
+      };
+      updateCount();
+    });
+  </script>
+
+  <!-- ===== Footer / تذييل الصفحة ===== -->
+  <footer class="aa-footer">
+    <div class="aa-footer-inner">
+
+      <div class="aa-footer-col aa-footer-brand">
+        <img src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}"
+             alt="أكاديمية التقدم"
+             class="aa-footer-logo">
+        <p class="aa-footer-desc">
+          أكاديمية التقدم هي أكاديمية تعليمية متخصصة تدعم طلاب المرحلة الثانوية
+          في مهارات اللغة الإنجليزية والرياضيات والمهارات الرقمية، في بيئة تعليمية
+          آمنة ومحفزة.
+        </p>
+        <p class="aa-footer-contact-line">هاتف: 9200 123 45</p>
+        <p class="aa-footer-contact-line">واتساب: 055 000 0000</p>
+        <p class="aa-footer-contact-line">بريد إلكتروني: info@advantageacademy.sa</p>
+      </div>
+
+      <div class="aa-footer-col">
+        <h4 class="aa-footer-title">التواصل</h4>
+        <ul class="aa-footer-list">
+          <li>الهاتف الرئيسي: 9200 123 45</li>
+          <li>واتساب الدعم: 055 000 0000</li>
+          <li>البريد الإلكتروني: info@advantageacademy.sa</li>
+        </ul>
+      </div>
+
+      <div class="aa-footer-col">
+        <h4 class="aa-footer-title">روابط سريعة</h4>
+        <ul class="aa-footer-list">
+          <li><a href="#home-section">الرئيسية</a></li>
+          <li><a href="{{ url_for('student_schedule') }}">الجدول الدراسي</a></li>
+          <li><a href="{{ url_for('student_events') }}">الفعاليات</a></li>
+          <li><a href="{{ url_for('student_points') }}">نقاطك</a></li>
+          <!-- ✅ جديد -->
+          <li><a href="{{ url_for('student_excuses') }}">رفع عذر</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="aa-footer-bottom">
+      <span>© جميع الحقوق محفوظة لأكاديمية التقدم 2025</span>
+    </div>
+  </footer>
+
+</body>
+</html>
