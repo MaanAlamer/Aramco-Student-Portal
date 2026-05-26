@@ -6,8 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/student_dashboard.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/student_portal.css') }}">
 </head>
 <body class="student-page">
+
+  {% include 'partials/student_nav.html' %}
 
   <!-- شريط علوي + هيرو -->
   <header class="student-hero" id="home-section">
@@ -16,26 +19,6 @@
     <div class="student-hero-bg">
       <img src="{{ url_for('static', filename='assets/book.jpg') }}" alt="خلفية طالب يقرأ" class="student-hero-image">
       <div class="student-hero-overlay"></div>
-    </div>
-
-    <!-- NAVBAR -->
-    <div class="student-navbar">
-      <div class="right-section">
-        <img src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}" class="student-logo" alt="logo">
-      </div>
-
-      <div class="left-section">
-        <a href="{{ url_for('student_dashboard') }}" class="nav-link active">الرئيسية</a>
-        <a href="{{ url_for('student_schedule') }}" class="nav-link">الجدول الدراسي</a>
-        <a href="{{ url_for('student_attendance') }}" class="nav-link">الحضور والغياب</a>
-        <a href="{{ url_for('student_points') }}" class="nav-link">نقاطك</a>
-        <a href="{{ url_for('student_events') }}" class="nav-link">الفعاليات</a>
-
-        <!-- ✅ جديد: صفحة رفع العذر -->
-        <a href="{{ url_for('student_excuses') }}" class="nav-link">رفع عذر</a>
-
-        <a href="/logout" class="nav-link logout">تسجيل الخروج</a>
-      </div>
     </div>
 
     <!-- محتوى الترحيب فوق الصورة -->
@@ -151,51 +134,7 @@
     });
   </script>
 
-  <!-- ===== Footer / تذييل الصفحة ===== -->
-  <footer class="aa-footer">
-    <div class="aa-footer-inner">
-
-      <div class="aa-footer-col aa-footer-brand">
-        <img src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}"
-             alt="أكاديمية التقدم"
-             class="aa-footer-logo">
-        <p class="aa-footer-desc">
-          أكاديمية التقدم هي أكاديمية تعليمية متخصصة تدعم طلاب المرحلة الثانوية
-          في مهارات اللغة الإنجليزية والرياضيات والمهارات الرقمية، في بيئة تعليمية
-          آمنة ومحفزة.
-        </p>
-        <p class="aa-footer-contact-line">هاتف: 9200 123 45</p>
-        <p class="aa-footer-contact-line">واتساب: 055 000 0000</p>
-        <p class="aa-footer-contact-line">بريد إلكتروني: info@advantageacademy.sa</p>
-      </div>
-
-      <div class="aa-footer-col">
-        <h4 class="aa-footer-title">التواصل</h4>
-        <ul class="aa-footer-list">
-          <li>الهاتف الرئيسي: 9200 123 45</li>
-          <li>واتساب الدعم: 055 000 0000</li>
-          <li>البريد الإلكتروني: info@advantageacademy.sa</li>
-        </ul>
-      </div>
-
-      <div class="aa-footer-col">
-        <h4 class="aa-footer-title">روابط سريعة</h4>
-        <ul class="aa-footer-list">
-          <li><a href="#home-section">الرئيسية</a></li>
-          <li><a href="{{ url_for('student_schedule') }}">الجدول الدراسي</a></li>
-          <li><a href="{{ url_for('student_events') }}">الفعاليات</a></li>
-          <li><a href="{{ url_for('student_points') }}">نقاطك</a></li>
-          <!-- ✅ جديد -->
-          <li><a href="{{ url_for('student_excuses') }}">رفع عذر</a></li>
-        </ul>
-      </div>
-
-    </div>
-
-    <div class="aa-footer-bottom">
-      <span>© جميع الحقوق محفوظة لأكاديمية التقدم 2025</span>
-    </div>
-  </footer>
+  {% include 'partials/student_footer.html' %}
 
 </body>
 </html>

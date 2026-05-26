@@ -191,6 +191,60 @@ def save_uploaded_file(file_storage):
     return f"static/uploads/{final_name}"
 
 
+def establish_demo_student_session():
+    """عرض تجريبي: جلسة طالب من أول سجل في قاعدة البيانات."""
+    db = SessionLocal()
+    try:
+        db_student = db.query(Student).order_by(Student.id.asc()).first()
+        if not db_student:
+            return False
+        session["user"] = {
+            "username": db_student.username,
+            "full_name": db_student.full_name,
+            "role": "student",
+            "student_id": db_student.id,
+        }
+        session.permanent = True
+        return True
+    finally:
+        db.close()
+
+
+def establish_demo_coordinator_session():
+    """عرض تجريبي: جلسة مشرف من قاعدة البيانات أو جلسة افتراضية."""
+    if Supervisor is not None:
+        db = SessionLocal()
+        try:
+            sup = (
+                db.query(Supervisor)
+                .filter(Supervisor.is_active == True)  # noqa: E712
+                .order_by(Supervisor.id.asc())
+                .first()
+            )
+            if not sup:
+                sup = db.query(Supervisor).order_by(Supervisor.id.asc()).first()
+            if sup:
+                session["user"] = {
+                    "username": sup.email,
+                    "role": "coordinator",
+                    "full_name": sup.full_name or "مشرف الأكاديمية",
+                    "supervisor_id": sup.id,
+                }
+                session.permanent = True
+                return True
+        finally:
+            db.close()
+
+    session["user"] = {
+        "username": "demo@aramco.com",
+        "role": "coordinator",
+        "full_name": "مشرف (عرض تجريبي)",
+        "supervisor_id": None,
+    }
+    session.permanent = True
+    return True
+
+
 # ================== Routes ==================
 @app.route("/")
 def index():
@@ -201,6 +255,18 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
+        enter = request.args.get("enter")
+        if enter == "student":
+            if establish_demo_student_session():
+                return redirect(url_for("student_dashboard"))
+            return render_template(
+                "login.html",
+                error="لا يوجد طلاب في قاعدة البيانات. شغّل seed_db.py أولاً.",
+                hero_filename=hero_static_filename(),
+            )
+        if enter == "coordinator":
+            establish_demo_coordinator_session()
+            return redirect(url_for("coordinator_dashboard"))
         return render_template("login.html", hero_filename=hero_static_filename())
 
     entered = (request.form.get("username", "").strip()

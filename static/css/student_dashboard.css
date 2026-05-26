@@ -16,6 +16,7 @@ html {
     font-family: "Tajawal", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     background-color: #020617;
     color: #ffffff;
+    --student-navbar-height: 84px;
 }
 
 /* ===== قسم الهيرو (الصورة الكبيرة) ===== */
@@ -23,7 +24,8 @@ html {
     position: relative;
     min-height: 65vh;
     overflow: hidden;
-    padding-top: 110px; /* عشان ما يغطيه النافبار الثابت */
+    /* مساحة داخل الهيرو حتى لا يُغطى العنوان بالنافبار الثابت */
+    padding-top: var(--student-navbar-height);
 }
 
 /* الخلفية */
@@ -51,50 +53,76 @@ html {
     z-index: 2;
 }
 
-/* ===== النافبار فوق الصورة مباشرة ===== */
-.student-navbar {
+/* ===== النافبار ثابت أعلى الصفحة (لوحة الطالب فقط) ===== */
+.student-page .student-navbar {
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
-    z-index: 50;
+    z-index: 1000;
+    height: var(--student-navbar-height);
+    max-height: var(--student-navbar-height);
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 60px;
-    background: transparent;  /* مثل ما طلبت: لا باك جراوند، الكلام فوق الصورة مباشرة */
+    gap: 20px;
+    padding: 0 clamp(16px, 4vw, 48px);
+    background: rgba(2, 6, 23, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
     direction: rtl;
+    transition: background 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* يمين: الشعار */
-.right-section {
+.student-page .student-navbar .right-section {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
 }
 
-.student-logo {
-    width: 300px;
+.student-page .student-navbar .student-logo {
+    width: 128px;
+    max-height: 52px;
     height: auto;
+    object-fit: contain;
     display: block;
+    position: static;
+    top: auto;
 }
 
-/* يسار: القوائم الرئيسية */
-.left-section {
+.student-page .student-navbar .left-section {
     display: flex;
     align-items: center;
-    gap: 100px;
+    justify-content: flex-end;
+    flex: 1;
+    min-width: 0;
+    gap: clamp(12px, 1.8vw, 28px);
+    flex-wrap: nowrap;
+    position: static;
+    top: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.student-page .student-navbar .left-section::-webkit-scrollbar {
+    display: none;
 }
 
 /* الروابط الأساسية في النافبار */
-.nav-link {
+.student-page .nav-link {
     color: #ffffff;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 500;
+    white-space: nowrap;
     position: relative;
     padding-bottom: 4px;
     transition: color 0.25s ease;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.6); /* يساعد في الوضوح فوق الصورة */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
 }
 
 /* الخط الأزرق تحت الرابط */
@@ -139,8 +167,8 @@ html {
     position: relative;
     z-index: 3;
     max-width: 580px;
-    padding: 0 60px 40px;
-    margin-top: 80px;
+    padding: 28px clamp(24px, 5vw, 60px) 40px;
+    margin-top: 0;
 }
 
 .student-welcome {
@@ -168,9 +196,13 @@ html {
 /* ===== المحتوى الرئيسي تحت الهيرو ===== */
 .student-main {
     position: relative;
-    z-index: 4;
-    padding: 0 60px 80px;
-    margin-top: -40px; /* تداخل بسيط مع الهيرو يعطي إحساس عمق */
+    z-index: 1;
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 24px 64px;
+    margin-top: -32px;
+    scroll-margin-top: var(--student-navbar-height);
 }
 
 /* صف الكروت (شبكة) */
@@ -323,26 +355,21 @@ html {
 
 /* ===== الاستجابة للجوال و الشاشات الأصغر ===== */
 @media (max-width: 1024px) {
-    .student-navbar {
-        padding: 14px 24px;
-        gap: 14px;
+    .student-page {
+        --student-navbar-height: 80px;
     }
 
-    .student-logo {
-        width: 160px;
+    .student-page .student-navbar .student-logo {
+        width: 112px;
+        max-height: 46px;
     }
 
-    .left-section {
-        gap: 20px;
-    }
-
-    .nav-link {
-        font-size: 16px;
+    .student-page .nav-link {
+        font-size: 14px;
     }
 
     .student-hero-content {
-        padding: 0 24px 32px;
-        margin-top: 90px;
+        padding-top: 40px;
     }
 
     .student-main {
@@ -354,83 +381,51 @@ html {
     }
 }
 
-@media (max-width: 640px) {
-    .student-navbar {
-        flex-direction: column-reverse;
-        align-items: flex-start;
+@media (max-width: 768px) {
+    .student-page {
+        --student-navbar-height: 76px;
     }
 
-    .left-section {
-        flex-wrap: wrap;
-        justify-content: flex-start;
+    .student-page .student-navbar .student-logo {
+        width: 100px;
+        max-height: 42px;
+    }
+
+    .student-page .nav-link {
+        font-size: 13px;
     }
 
     .student-hero-title {
-        font-size: 2.1rem;
+        font-size: 2.2rem;
     }
 }
-/* ====== التحكم في الشعار ====== */
-.student-logo {
-    width: 250px;
-    position: relative;     /* مهم عشان التحكم */
-    top: -150;                 /* ارفع + نزل − */
-    /* مثال:
-       top: -10px;  ← يرفع فوق
-       top: 20px;   ← ينزل تحت
-    */
-}
 
-/* ====== التحكم في مكان القوائم ====== */
-.left-section {
-    display: flex;
-    align-items: center;
-    gap: 100px;
-    position: relative;     /* مهم */
-    top: -70;                 /* ارفع + نزل − */
-    /* مثال:
-       top: -15px;  ← يرفع القوائم
-       top: 10px;   ← ينزل القوائم
-    */
-}
+@media (max-width: 640px) {
+    .student-page {
+        --student-navbar-height: 72px;
+    }
 
-/* ====== التحكم في ارتفاع النافبار كله ====== */
-.student-navbar {
-    padding-top: 20px;      /* ارفع */
-    padding-bottom: 20px;   /* نزل */
-    /* مثال:
-       padding-top: 5px;
-       padding-bottom: 5px;
-    */
-}
-/* ===== التحكم الكامل في رسالة الترحيب ===== */
-.student-hero-content {
-    position: relative;
-    z-index: 3;
-    max-width: 580px;
+    .student-page .student-navbar {
+        gap: 12px;
+        padding: 0 12px;
+    }
 
-    /* هنا مكان التحكم */
-    margin-top: 150px;     /* رفع / خفض كامل البوكس */
-    padding-right: 3;     /* تحريك لليسار */
-    padding-left: 0;      /* تحريك لليمين */
-}
+    .student-page .student-navbar .student-logo {
+        width: 88px;
+        max-height: 38px;
+    }
 
-/* مرحباً بك */
-.student-welcome {
-    font-size: 1.5rem;    /* تكبير النص */
-    margin-bottom: 10px;
-}
+    .student-page .student-navbar .left-section {
+        gap: 14px;
+    }
 
-/* العنوان الرئيسي: لوحة الطالب */
-.student-hero-title {
-    font-size: 5rem;      /* تكبير العنوان */
-    font-weight: 800;
-}
+    .student-hero-title {
+        font-size: 1.9rem;
+    }
 
-/* النص تحت العنوان */
-.student-hero-subtitle {
-    font-size: 1.2rem;    /* تكبير الوصف */
-    line-height: 1.9;
-    opacity: 0.95;
+    .student-hero-content {
+        padding-top: 32px;
+    }
 }
 /* =========================
    قسم من نحن داخل لوحة الطالب

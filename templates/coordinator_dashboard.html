@@ -2,894 +2,491 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>لوحة تحكم الأكاديمية</title>
+    <title>لوحة تحكم المشرف | أكاديمية التقدم</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}">
-    <style>
-        :root {
-            --bg: #020617;
-            --bg-soft: #050b1f;
-            --card: #060b22;
-            --card-soft: #07112c;
-            --primary: #4f46e5;
-            --primary-soft: #6366f1;
-            --accent: #22c55e;
-            --mute: #9ca3af;
-            --white: #f9fafb;
-            --radius-lg: 22px;
-            --radius-md: 18px;
-            --shadow-soft: 0 24px 60px rgba(15, 23, 42, 0.7);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: radial-gradient(circle at top, #020617, #020617 40%, #010313 80%);
-            color: var(--white);
-            min-height: 100vh;
-        }
-
-        .app-shell {
-            min-height: 100vh;
-            padding: 24px 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* ============ الهيدر + خانة المشرف + تسجيل الخروج ============ */
-        .top-bar {
-            background: radial-gradient(circle at top left, #0b1220, #020617);
-            border-radius: 26px;
-            padding: 16px 20px;
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-        }
-
-        .welcome-header { padding: 16px 20px; }
-
-        .welcome-right { display: flex; justify-content: flex-start; width: 25%; }
-
-        .welcome-center { width: 50%; display: flex; justify-content: center; }
-
-        .welcome-title { font-size: 26px; font-weight: 900; color: #f9fafb; }
-
-        .top-actions {
-            width: 25%;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .user-chip {
-            padding: 6px 14px;
-            border-radius: 999px;
-            background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(59, 130, 246, 0.15));
-            font-size: 12px;
-            color: var(--mute);
-            white-space: nowrap;
-        }
-
-        .logout-btn {
-            padding: 7px 16px;
-            border-radius: 999px;
-            border: 1px solid rgba(248, 250, 252, 0.3);
-            background: radial-gradient(circle at top, rgba(248, 250, 252, 0.06), rgba(15, 23, 42, 0.95));
-            color: #e5e7eb;
-            font-size: 13px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.18s ease-out;
-        }
-
-        .logout-btn:hover {
-            background: radial-gradient(circle at top, rgba(239, 68, 68, 0.18), rgba(15, 23, 42, 0.98));
-            border-color: rgba(248, 113, 113, 0.8);
-            color: #fee2e2;
-            transform: translateY(-1px);
-        }
-
-        .logout-btn span { font-size: 14px; }
-
-        .welcome-logo { width: 120px; height: 120px; }
-        .welcome-logo img { width: 100%; height: 100%; object-fit: contain; }
-
-        /* ============ باقي التصميم ============ */
-        .logo-box {
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 24px;
-            background: transparent !important;
-            overflow: visible;
-            padding: 0;
-        }
-        .logo-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            image-rendering: smooth;
-        }
-
-        .dashboard-grid {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 42px;
-            width: 100%;
-        }
-
-        .card {
-            background: radial-gradient(circle at top left, #020617, #030712 40%, #020617 100%);
-            border-radius: var(--radius-lg);
-            padding: 18px 18px 16px;
-            border: 1px solid rgba(30, 64, 175, 0.38);
-            box-shadow: var(--shadow-soft);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.18), transparent 55%);
-            opacity: 0.9;
-            pointer-events: none;
-        }
-
-        .card-content { position: relative; z-index: 1; }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 10px;
-        }
-
-        .card-title-block { display: flex; flex-direction: column; gap: 4px; }
-
-        .card-title { font-size: 26px !important; font-weight: 900; }
-
-        .card-subtitle { font-size: 18px !important; color: var(--mute); }
-
-        .card-tag {
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 11px;
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(148, 163, 184, 0.4);
-            color: var(--mute);
-            white-space: nowrap;
-        }
-
-        .card-header-actions{
-            display:flex;
-            align-items:center;
-            gap:10px;
-            flex-wrap:wrap;
-            justify-content:flex-end;
-        }
-
-        /* ✅ زر “رؤية أعذار الطلاب” */
-        .primary-link {
-            padding: 8px 14px;
-            border-radius: 999px;
-            background: linear-gradient(90deg, #4f46e5, #6366f1);
-            color: #f9fafb;
-            text-decoration: none;
-            font-size: 12px;
-            border: 1px solid rgba(199, 210, 254, 0.35);
-            transition: all 0.18s ease-out;
-            display:inline-flex;
-            align-items:center;
-            gap:8px;
-            white-space: nowrap;
-        }
-        .primary-link:hover{
-            transform: translateY(-1px);
-            box-shadow: 0 14px 28px rgba(79,70,229,0.22);
-        }
-
-        .card-main-row { display: flex; justify-content: space-between; gap: 16px; margin-top: 8px; }
-
-        .metric-block { display: flex; flex-direction: column; gap: 4px; }
-
-        .metric-label { font-size: 12px; color: var(--mute); }
-
-        .metric-value-lg { font-size: 26px; font-weight: 800; color: var(--primary-soft); }
-
-        .metric-caption { font-size: 11px; color: var(--mute); }
-
-        .week-bars {
-            margin-top: 16px;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95));
-            border-radius: 16px;
-            padding: 10px 12px;
-            border: 1px solid rgba(30, 64, 175, 0.6);
-        }
-
-        .week-header { display: flex; justify-content: space-between; font-size: 11px; color: var(--mute); margin-bottom: 6px; }
-
-        .week-row { display: grid; grid-template-columns: 70px 1fr 60px; align-items: center; gap: 12px; font-size: 14px; margin-bottom: 10px; }
-
-        .week-label { font-size: 18px !important; font-weight: 600; color: var(--mute); }
-
-        .week-bar-track { width: 100%; height: 18px !important; border-radius: 999px; background: rgba(15, 23, 42, 0.95); overflow: hidden; position: relative; }
-
-        .week-bar-attend { position: absolute; inset: 0; width: 90%; background: linear-gradient(90deg, #4f46e5, #6366f1); height: 100% !important; }
-
-        .week-bar-absent { position: absolute; inset: 0; width: 12%; right: 0; background: linear-gradient(90deg, rgba(248, 113, 113, 0), rgba(248, 113, 113, 0.85)); height: 100% !important; }
-
-        .week-percentage-label { text-align: left; font-size: 14px; color: #e5e7eb; }
-
-        .week-filter-row, .grade-filter-row, .teacher-filter-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 12px 0 20px;
-            flex-wrap: wrap;
-        }
-
-        .week-filter-label, .grade-filter-label { font-size: 14px; color: #9ca3af; }
-
-        .week-filter-select, .grade-filter-select {
-            padding: 7px 14px;
-            border-radius: 999px;
-            background: rgba(15,23,42,0.9);
-            border: 1px solid rgba(148,163,184,0.4);
-            color: #e5e7eb;
-            font-size: 13px;
-            min-width: 160px;
-        }
-
-        .card-table {
-            margin-top: 10px;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.96));
-            border-radius: 16px;
-            padding: 10px 12px;
-            border: 1px solid rgba(30, 64, 175, 0.6);
-            font-size: 12px;
-        }
-
-        /* default tables (teachers) 2 columns */
-        .table-header, .table-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            padding: 6px 2px;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .table-header {
-            color: var(--mute);
-            border-bottom: 1px solid rgba(55, 65, 81, 0.7);
-            margin-bottom: 2px;
-            font-size: 11px;
-        }
-
-        .table-row:nth-child(odd) { background: rgba(15, 23, 42, 0.9); }
-        .table-row:nth-child(even){ background: rgba(15, 23, 42, 0.7); }
-
-        /* points table 3 columns */
-        .points-table .table-header,
-        .points-table .table-row {
-            grid-template-columns: 1.4fr .9fr .6fr;
-        }
-
-        .badge-level {
-            display: inline-flex;
-            padding: 2px 8px;
-            border-radius: 999px;
-            font-size: 10px;
-            background: rgba(79, 70, 229, 0.22);
-            color: #c7d2fe;
-        }
-
-        .points-chip {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 36px;
-            padding: 2px 8px;
-            border-radius: 999px;
-            font-size: 11px;
-            background: radial-gradient(circle at top, #4f46e5, #1d4ed8);
-        }
-
-        .top3-two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 4px; }
-
-        .top3-subject {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.96));
-            border-radius: 14px;
-            padding: 8px 10px;
-            border: 1px solid rgba(30, 64, 175, 0.65);
-        }
-
-        .top3-subject-title { font-size: 13px; margin-bottom: 6px; color: #e5e7eb; font-weight: 600; }
-
-        .top3-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; }
-
-        .top3-rank { font-size: 11px; color: var(--mute); }
-        .top3-name { font-size: 12px; }
-        .top3-score { font-size: 11px; color: #c7d2fe; }
-
-        .gender-card-row { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
-
-        .gender-totals { display: flex; justify-content: space-between; align-items: baseline; }
-
-        .gender-total-number { font-size: 24px; font-weight: 800; color: var(--primary-soft); }
-
-        .gender-label { font-size: 11px; color: var(--mute); }
-
-        .gender-split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-        .gender-box {
-            background: rgba(15, 23, 42, 0.92);
-            border-radius: 14px;
-            padding: 8px 10px;
-            border: 1px solid rgba(55, 65, 81, 0.85);
-            font-size: 12px;
-        }
-
-        .gender-box span { display: block; }
-
-        .gender-count { font-size: 16px; font-weight: 700; }
-
-        .gender-bar-wrap, .commit-bar-wrap {
-            margin-top: 4px;
-            width: 100%;
-            height: 7px;
-            border-radius: 999px;
-            background: rgba(15, 23, 42, 0.96);
-            overflow: hidden;
-        }
-
-        .gender-bar { height: 100%; background: linear-gradient(90deg, #4f46e5, #6366f1); width: 0%; }
-        .gender-bar.female { background: linear-gradient(90deg, #ec4899, #f97316); width: 0%; }
-
-        .commit-card {
-            margin-top: 10px;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.97), rgba(15, 23, 42, 0.98));
-            border-radius: 14px;
-            padding: 8px 10px;
-            border: 1px solid rgba(30, 64, 175, 0.7);
-            font-size: 12px;
-        }
-
-        .commit-main { display: flex; justify-content: space-between; align-items: center; }
-
-        .commit-number { font-size: 26px; font-weight: 800; color: var(--accent); }
-
-        .commit-caption { font-size: 11px; color: var(--mute); }
-
-        .commit-bar { height: 100%; width: 91%; background: linear-gradient(90deg, #22c55e, #4ade80); }
-
-        /* ===== كرت الأعذار ===== */
-        .excuses-table {
-            margin-top: 10px;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.96));
-            border-radius: 16px;
-            padding: 10px 12px;
-            border: 1px solid rgba(30, 64, 175, 0.6);
-            font-size: 12px;
-        }
-
-        .excuses-header, .excuses-row {
-            display: grid;
-            grid-template-columns: 1.4fr 0.9fr 0.8fr 0.8fr;
-            padding: 6px 2px;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .excuses-header {
-            color: var(--mute);
-            border-bottom: 1px solid rgba(55, 65, 81, 0.7);
-            margin-bottom: 2px;
-            font-size: 11px;
-        }
-
-        .excuses-row:nth-child(odd) { background: rgba(15, 23, 42, 0.9); }
-        .excuses-row:nth-child(even){ background: rgba(15, 23, 42, 0.7); }
-
-        .status-pill {
-            padding: 3px 10px;
-            border-radius: 999px;
-            font-size: 11px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            white-space: nowrap;
-        }
-
-        .status-new {
-            background: rgba(59, 130, 246, 0.18);
-            border: 1px solid rgba(59, 130, 246, 0.6);
-            color: #bfdbfe;
-        }
-
-        .status-approved {
-            background: rgba(22, 163, 74, 0.18);
-            border: 1px solid rgba(22, 163, 74, 0.6);
-            color: #bbf7d0;
-        }
-
-        .status-rejected {
-            background: rgba(239, 68, 68, 0.18);
-            border: 1px solid rgba(239, 68, 68, 0.7);
-            color: #fecaca;
-        }
-
-        .excuse-link {
-            font-size: 11px;
-            color: #93c5fd;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        @media (max-width: 1024px) {
-            .dashboard-grid { grid-template-columns: 1fr; }
-            .top3-two-columns { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 720px) {
-            .app-shell { padding: 16px; }
-            .top-bar { flex-direction: column; align-items: flex-start; }
-            .welcome-right, .welcome-center, .top-actions { width: 100%; justify-content: space-between; }
-            .welcome-center { justify-content: flex-start; }
-            .top-actions { justify-content: flex-end; }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/coordinator_dashboard.css') }}">
 </head>
+<body class="coord-dashboard">
 
-<body>
 {% set male_pct = ((males / total_students * 100) if total_students else 0) | round(0) %}
 {% set female_pct = ((females / total_students * 100) if total_students else 0) | round(0) %}
 {% set delta_avg = (post_avg - pre_avg) | round(1) %}
+{% set ns_pts = namespace(total=0, count=0) %}
+{% for s in students %}
+  {% set ns_pts.total = ns_pts.total + (s.points_total if s.points_total is not none else 0) %}
+  {% set ns_pts.count = ns_pts.count + 1 %}
+{% endfor %}
+{% set avg_points = ((ns_pts.total / ns_pts.count) if ns_pts.count else 0) | round(0) %}
 
 <div class="app-shell">
-    <!-- =================== الهيدر =================== -->
-    <header class="top-bar welcome-header">
-        <div class="welcome-right">
-            <div class="logo-box welcome-logo">
-                <img src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}" alt="Advantage Academy Logo">
+
+    <!-- ============ Top Navigation ============ -->
+    <nav class="coord-topnav" aria-label="التنقل الرئيسي">
+        <div class="coord-topnav__brand">
+            <img class="coord-topnav__logo"
+                 src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}"
+                 alt="أكاديمية التقدم">
+            <div class="coord-topnav__user">
+                <span class="coord-topnav__greeting">مرحباً بك، {{ user.get('full_name', 'مشرف الأكاديمية') if user else 'مشرف الأكاديمية' }}</span>
+                <span class="coord-topnav__role">مشرف</span>
             </div>
         </div>
 
-        <div class="welcome-center">
-            <h1 class="welcome-title">مرحباً بك في لوحة تحكم المشرف</h1>
+        <div class="coord-topnav__links">
+            <a href="{{ url_for('coordinator_dashboard') }}" class="coord-topnav__link active">الرئيسية</a>
+            <a href="{{ url_for('coordinator_excuses') }}" class="coord-topnav__link">الأعذار</a>
         </div>
 
-        <div class="top-actions">
-            <div class="user-chip">
-                {{ user.get('full_name', 'مشرف الأكاديمية') if user else 'مشرف الأكاديمية' }}
-            </div>
+        <div class="coord-topnav__actions">
             <a href="{{ url_for('logout') }}" class="logout-btn"><span>تسجيل الخروج</span></a>
+        </div>
+    </nav>
+
+    <!-- ============ Page Header ============ -->
+    <header class="dash-header">
+        <div class="dash-header__text">
+            <h1 class="dash-header__title">لوحة تحكم المشرف</h1>
+            <p class="dash-header__subtitle">نظرة عامة على الأداء والإحصائيات</p>
+        </div>
+        <div class="dash-header__filter">
+            <label for="weekSelect">عرض حسب الأسبوع:</label>
+            <select id="weekSelect" class="week-filter-select" onchange="updateWeekData()">
+                <option value="1">الأسبوع الأول</option>
+                <option value="2">الأسبوع الثاني</option>
+                <option value="3">الأسبوع الثالث</option>
+                <option value="4">الأسبوع الرابع</option>
+                <option value="5">الأسبوع الخامس</option>
+                <option value="6">الأسبوع السادس</option>
+                <option value="7">الأسبوع السابع</option>
+                <option value="8">الأسبوع الثامن</option>
+                <option value="9">الأسبوع التاسع</option>
+                <option value="10">الأسبوع العاشر</option>
+            </select>
         </div>
     </header>
 
+    <!-- ============ KPI Summary Cards ============ -->
+    <section class="kpi-grid" aria-label="ملخص المؤشرات">
+        <article class="kpi-card kpi-card--commit">
+            <div class="kpi-card__head">
+                <div>
+                    <div class="kpi-card__label">مؤشر الالتزام العام</div>
+                    <div class="kpi-card__value">91</div>
+                    <div class="kpi-card__sub">من 100 نقطة (تجريبي)</div>
+                </div>
+                <div class="kpi-card__icon" aria-hidden="true">🏅</div>
+            </div>
+            <div class="kpi-sparkline" aria-hidden="true"></div>
+            <div class="kpi-card__footer">قابل للربط لاحقاً بالباك اند</div>
+        </article>
+
+        <article class="kpi-card kpi-card--attend">
+            <div class="kpi-card__head">
+                <div>
+                    <div class="kpi-card__label">متوسط الحضور</div>
+                    <div class="kpi-card__value" id="weeklyAttendanceValue">92٪</div>
+                    <div class="metric-caption">هذا الأسبوع (تجريبي)</div>
+                </div>
+                <div class="kpi-card__icon" aria-hidden="true">👥</div>
+            </div>
+            <div class="kpi-sparkline" aria-hidden="true"></div>
+            <div class="kpi-card__footer">الغياب: <span id="weeklyAbsenceValue" style="color:#fb7185;">8٪</span></div>
+        </article>
+
+        <article class="kpi-card kpi-card--points">
+            <div class="kpi-card__head">
+                <div>
+                    <div class="kpi-card__label">متوسط نقاط الطلاب</div>
+                    <div class="kpi-card__value">{{ avg_points }}</div>
+                    <div class="kpi-card__sub">من قاعدة البيانات</div>
+                </div>
+                <div class="kpi-card__icon" aria-hidden="true">⭐</div>
+            </div>
+            <div class="kpi-sparkline" aria-hidden="true"></div>
+            <div class="kpi-card__footer">{{ students|length }} طالب/طالبة مسجلون</div>
+        </article>
+
+        <article class="kpi-card kpi-card--students">
+            <div class="kpi-card__head">
+                <div>
+                    <div class="kpi-card__label">عدد الطلاب</div>
+                    <div class="kpi-card__value">{{ total_students }}</div>
+                    <div class="kpi-card__sub">طالب/طالبة</div>
+                </div>
+                <div class="kpi-card__icon" aria-hidden="true">🎓</div>
+            </div>
+            <div class="kpi-card__footer">{{ males }} طلاب بنين — {{ females }} طالبات</div>
+        </article>
+    </section>
+
     <main class="dashboard-grid">
-        <!-- ===== كرت الحضور والغياب (تجريبي) ===== -->
-        <section class="card">
-            <div class="card-content">
-                <div class="card-header">
-                    <div class="card-title-block">
-                        <div class="card-title">نسبة الحضور والغياب الأسبوعي</div>
-                        <div class="card-subtitle">متابعة التزام الطلاب بالحضور خلال الأسابيع الدراسية (تجريبي)</div>
-                    </div>
-                    <div class="card-tag">عرض حسب الأسبوع المختار</div>
-                </div>
 
-                <div class="week-filter-row">
-                    <div class="week-filter-label">اختر الأسبوع:</div>
-                    <select id="weekSelect" class="week-filter-select" onchange="updateWeekData()">
-                        <option value="1">الأسبوع الأول</option>
-                        <option value="2">الأسبوع الثاني</option>
-                        <option value="3">الأسبوع الثالث</option>
-                        <option value="4">الأسبوع الرابع</option>
-                        <option value="5">الأسبوع الخامس</option>
-                        <option value="6">الأسبوع السادس</option>
-                        <option value="7">الأسبوع السابع</option>
-                        <option value="8">الأسبوع الثامن</option>
-                        <option value="9">الأسبوع التاسع</option>
-                        <option value="10">الأسبوع العاشر</option>
-                    </select>
-                </div>
-
-                <div class="card-main-row">
-                    <div class="metric-block">
-                        <div class="metric-label">متوسط الحضور</div>
-                        <div class="metric-value-lg" id="weeklyAttendanceValue">92٪</div>
-                        <div class="metric-caption">مقارنة بالأسبوع الماضي: تحسن بمقدار 3 نقاط</div>
-                    </div>
-                    <div class="metric-block">
-                        <div class="metric-label">متوسط الغياب</div>
-                        <div class="metric-value-lg" id="weeklyAbsenceValue" style="color:#fb7185;">8٪</div>
-                    </div>
-                </div>
-
-                <div class="week-bars">
-                    <div class="week-header">
-                        <span>تفصيل الأيام</span>
-                        <span>نسبة الحضور لكل يوم</span>
-                    </div>
-
-                    <div class="week-row" data-day="monday">
-                        <div class="week-label">الاثنين</div>
-                        <div class="week-bar-track">
-                            <div class="week-bar-attend" style="width: 95%;"></div>
-                            <div class="week-bar-absent" style="width: 5%;"></div>
+        <!-- ============ Analytics Row ============ -->
+        <section class="analytics-grid">
+            <!-- Attendance weekly -->
+            <section class="card">
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-title-block">
+                            <div class="card-title">نسبة الحضور خلال الأسبوع</div>
+                            <div class="card-subtitle">متابعة التزام الطلاب بالحضور خلال الأسابيع الدراسية (تجريبي)</div>
                         </div>
-                        <div class="week-percentage-label" id="mondayValue">95٪</div>
+                        <div class="card-tag">عرض حسب الأسبوع المختار</div>
                     </div>
 
-                    <div class="week-row" data-day="wednesday">
-                        <div class="week-label">الأربعاء</div>
-                        <div class="week-bar-track">
-                            <div class="week-bar-attend" style="width: 90%;"></div>
-                            <div class="week-bar-absent" style="width: 10%;"></div>
-                        </div>
-                        <div class="week-percentage-label" id="wednesdayValue">90٪</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== كرت نقاط الانضباط والمشاركة (حقيقي من DB) ===== -->
-        <section class="card">
-            <div class="card-content">
-                <div class="card-header">
-                    <div class="card-title-block">
-                        <div class="card-title">نقاط الانضباط والمشاركة والحضور</div>
-                        <div class="card-subtitle">عرض نقاط الطلاب من قاعدة البيانات</div>
-                    </div>
-                    <div class="card-tag">Students</div>
-                </div>
-
-                <div style="display:flex; gap:10px; margin-bottom:12px; flex-wrap:wrap;">
-                    <input
-                        type="text"
-                        id="filterName"
-                        placeholder="ابحث باسم الطالب…"
-                        style="padding:7px 14px;border-radius:12px;background:rgba(15,23,42,0.85);
-                               border:1px solid rgba(148,163,184,0.35);color:#e5e7eb;font-size:12px;flex:1;"
-                        onkeyup="filterPointsTable()"
-                    >
-
-                    <select
-                        id="filterGrade"
-                        onchange="filterPointsTable()"
-                        style="padding:7px 14px;border-radius:12px;background:rgba(15,23,42,0.85);
-                               border:1px solid rgba(148,163,184,0.35);color:#e5e7eb;font-size:12px;">
-                        <option value="">كل الصفوف</option>
-                        <option value="أول">الأول</option>
-                        <option value="ثاني">الثاني</option>
-                        <option value="ثالث">الثالث</option>
-                    </select>
-                </div>
-
-                <div class="card-table points-table">
-                    <div class="table-header">
-                        <div>اسم الطالب</div>
-                        <div>الصف</div>
-                        <div style="text-align:center;">النقاط</div>
-                    </div>
-
-                    {% for s in students %}
-                    {% set grade_txt = (s.grade or "") %}
-                    {% set grade_key = "أول" if "أول" in grade_txt else ("ثاني" if "ثاني" in grade_txt else ("ثالث" if "ثالث" in grade_txt else "")) %}
-                    <div class="table-row points-row"
-                         data-name="{{ s.full_name }}"
-                         data-grade="{{ grade_key }}">
-                        <div>{{ s.full_name }}</div>
-                        <div><span class="badge-level">{{ s.grade or "غير محدد" }}</span></div>
-                        <div style="text-align:center;"><span class="points-chip">{{ s.points_total if s.points_total is not none else 0 }}</span></div>
-                    </div>
-                    {% endfor %}
-
-                    {% if not students %}
-                    <div style="padding:10px;color:var(--mute);font-size:12px;">لا يوجد طلاب حالياً.</div>
-                    {% endif %}
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== كرت أفضل 3 طلاب (حقيقي من DB عبر top_students) ===== -->
-        <section class="card">
-            <div class="card-content">
-                <div class="card-header">
-                    <div class="card-title-block">
-                        <div class="card-title">أفضل ثلاثة طلاب في الإنجليزي والرياضيات</div>
-                        <div class="card-subtitle">حسب درجات الطلاب (post ثم pre)</div>
-                    </div>
-                </div>
-
-                <div class="grade-filter-row">
-                    <label for="gradeSelectTop" class="grade-filter-label">عرض حسب الصف:</label>
-                    <select id="gradeSelectTop" class="grade-filter-select" onchange="switchPhase()">
-                        <option value="أول ثانوي">الأول ثانوي</option>
-                        <option value="ثاني ثانوي">الثاني ثانوي</option>
-                        <option value="ثالث ثانوي">الثالث ثانوي</option>
-                    </select>
-                </div>
-
-                <script type="application/json" id="topStudentsJson">
-                {
-                  "أول ثانوي": {
-                    "math": [
-                      {% for x in top_students.get("أول ثانوي", {}).get("math", []) %}
-                      {"name":"{{ x.full_name }}","score":{{ (x.math_post if x.math_post is not none else (x.math_pre if x.math_pre is not none else 0)) }}}{% if not loop.last %},{% endif %}
-                      {% endfor %}
-                    ],
-                    "english": [
-                      {% for x in top_students.get("أول ثانوي", {}).get("english", []) %}
-                      {"name":"{{ x.full_name }}","score":{{ (x.eng_post if x.eng_post is not none else (x.eng_pre if x.eng_pre is not none else 0)) }}}{% if not loop.last %},{% endif %}
-                      {% endfor %}
-                    ]
-                  },
-                  "ثاني ثانوي": {
-                    "math": [
-                      {% for x in top_students.get("ثاني ثانوي", {}).get("math", []) %}
-                      {"name":"{{ x.full_name }}","score":{{ (x.math_post if x.math_post is not none else (x.math_pre if x.math_pre is not none else 0)) }}}{% if not loop.last %},{% endif %}
-                      {% endfor %}
-                    ],
-                    "english": [
-                      {% for x in top_students.get("ثاني ثانوي", {}).get("english", []) %}
-                      {"name":"{{ x.full_name }}","score":{{ (x.eng_post if x.eng_post is not none else (x.eng_pre if x.eng_pre is not none else 0)) }}}{% if not loop.last %},{% endif %}
-                      {% endfor %}
-                    ]
-                  },
-                  "ثالث ثانوي": {
-                    "math": [
-                      {% for x in top_students.get("ثالث ثانوي", {}).get("math", []) %}
-                      {"name":"{{ x.full_name }}","score":{{ (x.math_post if x.math_post is not none else (x.math_pre if x.math_pre is not none else 0)) }}}{% if not loop.last %},{% endif %}
-                      {% endfor %}
-                    ],
-                    "english": [
-                      {% for x in top_students.get("ثالث ثانوي", {}).get("english", []) %}
-                      {"name":"{{ x.full_name }}","score":{{ (x.eng_post if x.eng_post is not none else (x.eng_pre if x.eng_pre is not none else 0)) }}}{% if not loop.last %},{% endif %}
-                      {% endfor %}
-                    ]
-                  }
-                }
-                </script>
-
-                <div class="top3-two-columns">
-                    <div class="top3-subject">
-                        <div class="top3-subject-title">مادة الرياضيات</div>
-
-                        <div class="top3-row">
-                            <span id="math1Score" class="top3-score">—</span>
-                            <span id="math1Name" class="top3-name">—</span>
-                            <span class="top3-rank">المركز الأول</span>
+                    <div class="week-bars">
+                        <div class="week-header">
+                            <span>تفصيل الأيام</span>
+                            <span>نسبة الحضور لكل يوم</span>
                         </div>
 
-                        <div class="top3-row">
-                            <span id="math2Score" class="top3-score">—</span>
-                            <span id="math2Name" class="top3-name">—</span>
-                            <span class="top3-rank">المركز الثاني</span>
+                        <div class="week-row" data-day="monday">
+                            <div class="week-label">الاثنين</div>
+                            <div class="week-bar-track">
+                                <div class="week-bar-attend" style="width: 95%;"></div>
+                                <div class="week-bar-absent" style="width: 5%;"></div>
+                            </div>
+                            <div class="week-percentage-label" id="mondayValue">95٪</div>
                         </div>
 
-                        <div class="top3-row">
-                            <span id="math3Score" class="top3-score">—</span>
-                            <span id="math3Name" class="top3-name">—</span>
-                            <span class="top3-rank">المركز الثالث</span>
-                        </div>
-                    </div>
-
-                    <div class="top3-subject">
-                        <div class="top3-subject-title">مادة اللغة الإنجليزية</div>
-
-                        <div class="top3-row">
-                            <span id="eng1Score" class="top3-score">—</span>
-                            <span id="eng1Name" class="top3-name">—</span>
-                            <span class="top3-rank">المركز الأول</span>
-                        </div>
-
-                        <div class="top3-row">
-                            <span id="eng2Score" class="top3-score">—</span>
-                            <span id="eng2Name" class="top3-name">—</span>
-                            <span class="top3-rank">المركز الثاني</span>
-                        </div>
-
-                        <div class="top3-row">
-                            <span id="eng3Score" class="top3-score">—</span>
-                            <span id="eng3Name" class="top3-name">—</span>
-                            <span class="top3-rank">المركز الثالث</span>
+                        <div class="week-row" data-day="wednesday">
+                            <div class="week-label">الأربعاء</div>
+                            <div class="week-bar-track">
+                                <div class="week-bar-attend" style="width: 90%;"></div>
+                                <div class="week-bar-absent" style="width: 10%;"></div>
+                            </div>
+                            <div class="week-percentage-label" id="wednesdayValue">90٪</div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- ===== كرت إحصائية الطلاب (حقيقي) ===== -->
-        <section class="card">
-            <div class="card-content">
-                <div class="card-header">
-                    <div class="card-title-block">
-                        <div class="card-title">إحصائية الطلاب في الأكاديمية</div>
-                        <div class="card-subtitle">عدد الطلاب + بنين/بنات + متوسط قبل/بعد</div>
-                    </div>
-                    <div class="card-tag">Students</div>
-                </div>
-
-                <div class="gender-card-row">
-                    <div class="gender-totals">
-                        <div>
-                            <div class="gender-label">إجمالي عدد الطلاب والطالبات</div>
-                            <div class="gender-total-number">{{ total_students }} طالب/طالبة</div>
+            <!-- Student distribution -->
+            <section class="card">
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-title-block">
+                            <div class="card-title">توزيع الطلاب</div>
+                            <div class="card-subtitle">عدد الطلاب + بنين/بنات + متوسط قبل/بعد</div>
                         </div>
+                        <div class="card-tag">Students</div>
                     </div>
 
-                    <div class="gender-split">
-                        <div class="gender-box">
-                            <span class="gender-label">عدد الطلاب البنين</span>
-                            <span class="gender-count">{{ males }}</span>
-                            <div class="gender-bar-wrap">
-                                <div class="gender-bar" data-pct="{{ male_pct|int }}"></div>
+                    <div class="distribution-panel">
+                        <div class="donut-wrap">
+                            <div class="donut-chart" style="--male-pct: {{ male_pct|int }};"></div>
+                            <div class="donut-hole">
+                                <span class="donut-hole__total">{{ total_students }}</span>
+                                <span class="donut-hole__label">إجمالي الطلاب</span>
                             </div>
                         </div>
-                        <div class="gender-box">
-                            <span class="gender-label">عدد الطالبات البنات</span>
-                            <span class="gender-count">{{ females }}</span>
-                            <div class="gender-bar-wrap">
-                                <div class="gender-bar female" data-pct="{{ female_pct|int }}"></div>
+
+                        <div class="distribution-legend">
+                            <div class="legend-item">
+                                <span class="legend-item__dot legend-item__dot--male"></span>
+                                <span class="legend-item__text">طلاب بنين</span>
+                                <span class="legend-item__value">{{ males }} ({{ male_pct|int }}٪)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-item__dot legend-item__dot--female"></span>
+                                <span class="legend-item__text">طالبات بنات</span>
+                                <span class="legend-item__value">{{ females }} ({{ female_pct|int }}٪)</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card-table" style="margin-top:10px;">
-                        <div class="table-header" style="grid-template-columns:1fr 1fr 1fr;">
-                            <div>متوسط قبل</div>
-                            <div>متوسط بعد</div>
-                            <div style="text-align:center;">فرق</div>
+                    <div class="stats-mini-grid">
+                        <div class="stats-mini-item">
+                            <div class="stats-mini-item__label">متوسط قبل</div>
+                            <span class="badge-level">{{ pre_avg }}%</span>
                         </div>
-
-                        <div class="table-row" style="grid-template-columns:1fr 1fr 1fr;">
-                            <div><span class="badge-level">{{ pre_avg }}%</span></div>
-                            <div><span class="badge-level">{{ post_avg }}%</span></div>
-                            <div style="text-align:center;"><span class="points-chip">{{ delta_avg }}</span></div>
+                        <div class="stats-mini-item">
+                            <div class="stats-mini-item__label">متوسط بعد</div>
+                            <span class="badge-level">{{ post_avg }}%</span>
+                        </div>
+                        <div class="stats-mini-item">
+                            <div class="stats-mini-item__label">الفرق</div>
+                            <span class="points-chip">{{ delta_avg }}</span>
                         </div>
                     </div>
 
-                    <div class="commit-card">
-                        <div class="commit-main">
+                    <div class="gender-bar-wrap" style="margin-top:14px; display:none;">
+                        <div class="gender-bar" data-pct="{{ male_pct|int }}"></div>
+                    </div>
+                    <div class="gender-bar-wrap" style="display:none;">
+                        <div class="gender-bar female" data-pct="{{ female_pct|int }}"></div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- ============ Excuses + Top 3 ============ -->
+        <section class="data-grid">
+            <section class="card" id="excusesCard">
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-title-block">
+                            <div class="card-title">الأعذار المرفوعة من الطلاب</div>
+                            <div class="card-subtitle">طلبات الأعذار (مقبولة / مرفوضة / قيد المراجعة)</div>
+                        </div>
+                        <div class="card-header-actions">
+                            <a class="primary-link" href="{{ url_for('coordinator_excuses') }}">عرض جميع الأعذار</a>
+                            <div class="card-tag">آخر 50</div>
+                        </div>
+                    </div>
+
+                    <div class="teacher-filter-row">
+                        <select id="excuseStatusSelect" class="grade-filter-select" onchange="filterExcuses()">
+                            <option value="">كل الحالات</option>
+                            <option value="new">قيد المراجعة</option>
+                            <option value="approved">مقبول</option>
+                            <option value="rejected">مرفوض</option>
+                        </select>
+
+                        <select id="excuseGradeSelect" class="grade-filter-select" onchange="filterExcuses()">
+                            <option value="">كل الصفوف</option>
+                            <option value="أول">أول ثانوي</option>
+                            <option value="ثاني">ثاني ثانوي</option>
+                            <option value="ثالث">ثالث ثانوي</option>
+                        </select>
+                    </div>
+
+                    <div class="excuses-table">
+                        <div class="excuses-header">
+                            <div>اسم الطالب</div>
+                            <div>التاريخ</div>
+                            <div>الحالة</div>
+                            <div>المرفق</div>
+                        </div>
+
+                        {% for ex in excuses %}
+                        {% set s = ex.student %}
+                        {% set gtxt = (s.grade if s else "") %}
+                        {% set gkey = "أول" if "أول" in gtxt else ("ثاني" if "ثاني" in gtxt else ("ثالث" if "ثالث" in gtxt else "")) %}
+                        <div class="excuses-row" data-status="{{ ex.status }}" data-grade="{{ gkey }}">
+                            <div>{{ s.full_name if s else "—" }}</div>
+                            <div>{{ ex.date.strftime("%Y-%m-%d") if ex.date else "" }}</div>
                             <div>
-                                <div class="gender-label">مؤشر الالتزام العام (تجريبي)</div>
-                                <div class="commit-number">91</div>
+                                {% if ex.status == "approved" %}
+                                    <span class="status-pill status-approved">مقبول</span>
+                                {% elif ex.status == "rejected" %}
+                                    <span class="status-pill status-rejected">مرفوض</span>
+                                {% else %}
+                                    <span class="status-pill status-new">قيد المراجعة</span>
+                                {% endif %}
                             </div>
-                            <div class="commit-caption">من 100 | قابل للربط لاحقاً</div>
+                            <div>
+                                {% if ex.attachment_path %}
+                                    {% set clean_path = ex.attachment_path.replace('static/', '', 1) %}
+                                    <a class="excuse-link" href="{{ url_for('static', filename=clean_path) }}" target="_blank">عرض</a>
+                                {% else %}
+                                    <span style="color:var(--mute);font-size:12px;">لا يوجد</span>
+                                {% endif %}
+                            </div>
                         </div>
-                        <div class="commit-bar-wrap">
-                            <div class="commit-bar"></div>
+                        {% endfor %}
+
+                        {% if not excuses %}
+                        <div class="empty-state">لا توجد أعذار حالياً.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-title-block">
+                            <div class="card-title">أفضل ثلاثة طلاب في الإنجليزي والرياضيات</div>
+                            <div class="card-subtitle">حسب درجات الطلاب (post ثم pre)</div>
                         </div>
                     </div>
 
+                    <div class="grade-filter-row">
+                        <label for="gradeSelectTop" class="grade-filter-label">عرض حسب الصف:</label>
+                        <select id="gradeSelectTop" class="grade-filter-select" onchange="switchPhase()">
+                            <option value="أول ثانوي">الأول ثانوي</option>
+                            <option value="ثاني ثانوي">الثاني ثانوي</option>
+                            <option value="ثالث ثانوي">الثالث ثانوي</option>
+                        </select>
+                    </div>
+
+                    <script type="application/json" id="topStudentsJson">
+                    {
+                      "أول ثانوي": {
+                        "math": [
+                          {% for x in top_students.get("أول ثانوي", {}).get("math", []) %}
+                          {"name":"{{ x.full_name }}","score":{{ (x.math_post if x.math_post is not none else (x.math_pre if x.math_pre is not none else 0)) }}}{% if not loop.last %},{% endif %}
+                          {% endfor %}
+                        ],
+                        "english": [
+                          {% for x in top_students.get("أول ثانوي", {}).get("english", []) %}
+                          {"name":"{{ x.full_name }}","score":{{ (x.eng_post if x.eng_post is not none else (x.eng_pre if x.eng_pre is not none else 0)) }}}{% if not loop.last %},{% endif %}
+                          {% endfor %}
+                        ]
+                      },
+                      "ثاني ثانوي": {
+                        "math": [
+                          {% for x in top_students.get("ثاني ثانوي", {}).get("math", []) %}
+                          {"name":"{{ x.full_name }}","score":{{ (x.math_post if x.math_post is not none else (x.math_pre if x.math_pre is not none else 0)) }}}{% if not loop.last %},{% endif %}
+                          {% endfor %}
+                        ],
+                        "english": [
+                          {% for x in top_students.get("ثاني ثانوي", {}).get("english", []) %}
+                          {"name":"{{ x.full_name }}","score":{{ (x.eng_post if x.eng_post is not none else (x.eng_pre if x.eng_pre is not none else 0)) }}}{% if not loop.last %},{% endif %}
+                          {% endfor %}
+                        ]
+                      },
+                      "ثالث ثانوي": {
+                        "math": [
+                          {% for x in top_students.get("ثالث ثانوي", {}).get("math", []) %}
+                          {"name":"{{ x.full_name }}","score":{{ (x.math_post if x.math_post is not none else (x.math_pre if x.math_pre is not none else 0)) }}}{% if not loop.last %},{% endif %}
+                          {% endfor %}
+                        ],
+                        "english": [
+                          {% for x in top_students.get("ثالث ثانوي", {}).get("english", []) %}
+                          {"name":"{{ x.full_name }}","score":{{ (x.eng_post if x.eng_post is not none else (x.eng_pre if x.eng_pre is not none else 0)) }}}{% if not loop.last %},{% endif %}
+                          {% endfor %}
+                        ]
+                      }
+                    }
+                    </script>
+
+                    <div class="top3-two-columns">
+                        <div class="top3-subject">
+                            <div class="top3-subject-title">مادة الرياضيات</div>
+                            <div class="top3-row">
+                                <span class="top3-rank-badge rank-1">1</span>
+                                <span id="math1Name" class="top3-name">—</span>
+                                <span id="math1Score" class="top3-score">—</span>
+                                <span class="top3-rank">المركز الأول</span>
+                            </div>
+                            <div class="top3-row">
+                                <span class="top3-rank-badge rank-2">2</span>
+                                <span id="math2Name" class="top3-name">—</span>
+                                <span id="math2Score" class="top3-score">—</span>
+                                <span class="top3-rank">المركز الثاني</span>
+                            </div>
+                            <div class="top3-row">
+                                <span class="top3-rank-badge rank-3">3</span>
+                                <span id="math3Name" class="top3-name">—</span>
+                                <span id="math3Score" class="top3-score">—</span>
+                                <span class="top3-rank">المركز الثالث</span>
+                            </div>
+                        </div>
+
+                        <div class="top3-subject">
+                            <div class="top3-subject-title">مادة اللغة الإنجليزية</div>
+                            <div class="top3-row">
+                                <span class="top3-rank-badge rank-1">1</span>
+                                <span id="eng1Name" class="top3-name">—</span>
+                                <span id="eng1Score" class="top3-score">—</span>
+                                <span class="top3-rank">المركز الأول</span>
+                            </div>
+                            <div class="top3-row">
+                                <span class="top3-rank-badge rank-2">2</span>
+                                <span id="eng2Name" class="top3-name">—</span>
+                                <span id="eng2Score" class="top3-score">—</span>
+                                <span class="top3-rank">المركز الثاني</span>
+                            </div>
+                            <div class="top3-row">
+                                <span class="top3-rank-badge rank-3">3</span>
+                                <span id="eng3Name" class="top3-name">—</span>
+                                <span id="eng3Score" class="top3-score">—</span>
+                                <span class="top3-rank">المركز الثالث</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
         </section>
 
-        <!-- ===== كرت الأعذار (حقيقي من DB) ===== -->
-        <section class="card" id="excusesCard">
-            <div class="card-content">
-                <div class="card-header">
-                    <div class="card-title-block">
-                        <div class="card-title">الأعذار المرفوعة من الطلاب</div>
-                        <div class="card-subtitle">طلبات الأعذار (مقبولة / مرفوضة / قيد المراجعة)</div>
-                    </div>
-
-                    <!-- ✅ إضافة زر “رؤية أعذار الطلاب” -->
-                    <div class="card-header-actions">
-                        <a class="primary-link" href="{{ url_for('coordinator_excuses') }}">
-                            رؤية أعذار الطلاب
-                        </a>
-                        <div class="card-tag">آخر 50</div>
-                    </div>
-                </div>
-
-                <div class="teacher-filter-row">
-                    <select id="excuseStatusSelect" class="grade-filter-select" onchange="filterExcuses()">
-                        <option value="">كل الحالات</option>
-                        <option value="new">قيد المراجعة</option>
-                        <option value="approved">مقبول</option>
-                        <option value="rejected">مرفوض</option>
-                    </select>
-
-                    <select id="excuseGradeSelect" class="grade-filter-select" onchange="filterExcuses()">
-                        <option value="">كل الصفوف</option>
-                        <option value="أول">أول ثانوي</option>
-                        <option value="ثاني">ثاني ثانوي</option>
-                        <option value="ثالث">ثالث ثانوي</option>
-                    </select>
-                </div>
-
-                <div class="excuses-table">
-                    <div class="excuses-header">
-                        <div>اسم الطالب</div>
-                        <div>التاريخ</div>
-                        <div>الحالة</div>
-                        <div>المرفق</div>
-                    </div>
-
-                    {% for ex in excuses %}
-                    {% set s = ex.student %}
-                    {% set gtxt = (s.grade if s else "") %}
-                    {% set gkey = "أول" if "أول" in gtxt else ("ثاني" if "ثاني" in gtxt else ("ثالث" if "ثالث" in gtxt else "")) %}
-                    <div class="excuses-row" data-status="{{ ex.status }}" data-grade="{{ gkey }}">
-                        <div>{{ s.full_name if s else "—" }}</div>
-                        <div>{{ ex.date.strftime("%Y-%m-%d") if ex.date else "" }}</div>
-                        <div>
-                            {% if ex.status == "approved" %}
-                                <span class="status-pill status-approved">مقبول</span>
-                            {% elif ex.status == "rejected" %}
-                                <span class="status-pill status-rejected">مرفوض</span>
-                            {% else %}
-                                <span class="status-pill status-new">قيد المراجعة</span>
-                            {% endif %}
+        <!-- ============ Points + Teachers ============ -->
+        <section class="secondary-grid">
+            <section class="card">
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-title-block">
+                            <div class="card-title">نقاط الانضباط والمشاركة والحضور</div>
+                            <div class="card-subtitle">عرض نقاط الطلاب من قاعدة البيانات</div>
                         </div>
-                        <div>
-                            {% if ex.attachment_path %}
-                                {# ✅ تصحيح: لو المسار يبدأ بـ static/ نشيله قبل url_for #}
-                                {% set clean_path = ex.attachment_path.replace('static/', '', 1) %}
-                                <a class="excuse-link" href="{{ url_for('static', filename=clean_path) }}" target="_blank">عرض</a>
-                            {% else %}
-                                <span style="color:var(--mute);font-size:11px;">لا يوجد</span>
-                            {% endif %}
+                        <div class="card-tag">Students</div>
+                    </div>
+
+                    <div class="filter-toolbar">
+                        <input
+                            type="text"
+                            id="filterName"
+                            placeholder="ابحث باسم الطالب…"
+                            onkeyup="filterPointsTable()"
+                        >
+                        <select id="filterGrade" class="grade-filter-select" onchange="filterPointsTable()">
+                            <option value="">كل الصفوف</option>
+                            <option value="أول">الأول</option>
+                            <option value="ثاني">الثاني</option>
+                            <option value="ثالث">الثالث</option>
+                        </select>
+                    </div>
+
+                    <div class="card-table points-table">
+                        <div class="table-header">
+                            <div>اسم الطالب</div>
+                            <div>الصف</div>
+                            <div style="text-align:center;">النقاط</div>
+                        </div>
+
+                        {% for s in students %}
+                        {% set grade_txt = (s.grade or "") %}
+                        {% set grade_key = "أول" if "أول" in grade_txt else ("ثاني" if "ثاني" in grade_txt else ("ثالث" if "ثالث" in grade_txt else "")) %}
+                        <div class="table-row points-row"
+                             data-name="{{ s.full_name }}"
+                             data-grade="{{ grade_key }}">
+                            <div>{{ s.full_name }}</div>
+                            <div><span class="badge-level">{{ s.grade or "غير محدد" }}</span></div>
+                            <div style="text-align:center;"><span class="points-chip">{{ s.points_total if s.points_total is not none else 0 }}</span></div>
+                        </div>
+                        {% endfor %}
+
+                        {% if not students %}
+                        <div class="empty-state">لا يوجد طلاب حالياً.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-title-block">
+                            <div class="card-title">جداول المعلمين حسب الصف</div>
+                            <div class="card-subtitle">عرض أسماء المعلمين مع الصفوف (بنين / بنات) — تجريبي</div>
                         </div>
                     </div>
-                    {% endfor %}
 
-                    {% if not excuses %}
-                    <div style="padding:10px;color:var(--mute);font-size:12px;">لا توجد أعذار حالياً.</div>
-                    {% endif %}
-                </div>
-            </div>
-        </section>
+                    <div class="teacher-filter-row">
+                        <select id="teacherGradeSelect" class="grade-filter-select" onchange="updateTeachersBoard()">
+                            <option value="1">الأول ثانوي</option>
+                            <option value="2">الثاني ثانوي</option>
+                            <option value="3">الثالث ثانوي</option>
+                        </select>
 
-        <!-- ===== كرت جداول المعلمين حسب الصف (تجريبي ثابت مثل ملفك) ===== -->
-        <section class="card">
-            <div class="card-content">
-                <div class="card-header">
-                    <div class="card-title-block">
-                        <div class="card-title">جداول المعلمين حسب الصف</div>
-                        <div class="card-subtitle">عرض أسماء المعلمين مع الصفوف (بنين / بنات) — تجريبي</div>
+                        <select id="teacherGenderSelect" class="grade-filter-select" onchange="updateTeachersBoard()">
+                            <option value="boys">بنين</option>
+                            <option value="girls">بنات</option>
+                        </select>
+                    </div>
+
+                    <div class="card-table">
+                        <div class="table-header">
+                            <div>اسم المعلم</div>
+                            <div>المادة</div>
+                        </div>
+                        <div id="teacherRows"></div>
                     </div>
                 </div>
-
-                <div class="teacher-filter-row">
-                    <select id="teacherGradeSelect" class="grade-filter-select" onchange="updateTeachersBoard()">
-                        <option value="1">الأول ثانوي</option>
-                        <option value="2">الثاني ثانوي</option>
-                        <option value="3">الثالث ثانوي</option>
-                    </select>
-
-                    <select id="teacherGenderSelect" class="grade-filter-select" onchange="updateTeachersBoard()">
-                        <option value="boys">بنين</option>
-                        <option value="girls">بنات</option>
-                    </select>
-                </div>
-
-                <div class="card-table">
-                    <div class="table-header">
-                        <div>اسم المعلم</div>
-                        <div>المادة</div>
-                    </div>
-                    <div id="teacherRows"></div>
-                </div>
-            </div>
+            </section>
         </section>
 
     </main>

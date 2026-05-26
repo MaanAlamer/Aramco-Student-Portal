@@ -5,29 +5,17 @@
   <title>لوحة الطالب | أكاديمية التقدم</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/student_dashboard.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/student_portal.css') }}">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}">
 </head>
 <body class="student-page">
+
+  {% include 'partials/student_nav.html' %}
 
   <header class="student-hero" id="home-section">
     <div class="student-hero-bg">
       <img src="{{ url_for('static', filename='assets/book.jpg') }}" alt="خلفية طالب يقرأ" class="student-hero-image">
       <div class="student-hero-overlay"></div>
-    </div>
-
-    <div class="student-navbar">
-        <div class="right-section">
-          <img src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}" class="student-logo" alt="logo">
-        </div>
-
-        <div class="left-section">
-          <a href="{{ url_for('student_dashboard') }}" class="nav-link active">الرئيسية</a>
-          <a href="{{ url_for('student_schedule') }}" class="nav-link">الجدول الدراسي</a>
-          <a href="{{ url_for('student_attendance') }}" class="nav-link">الحضور والغياب</a>
-          <a href="{{ url_for('student_points') }}" class="nav-link">نقاطك</a>
-          <a href="{{ url_for('student_events') }}" class="nav-link">الفعاليات</a>
-          <a href="{{ url_for('logout') }}" class="nav-link logout">تسجيل الخروج</a>
-        </div>
     </div>
 
     <div class="student-hero-content">

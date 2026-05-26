@@ -1,0 +1,42 @@
+<footer class="aa-footer">
+  <div class="aa-footer-inner">
+    <div class="aa-footer-col aa-footer-brand">
+      <img src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}"
+           alt="أكاديمية التقدم"
+           class="aa-footer-logo">
+      <p class="aa-footer-desc">
+        أكاديمية التقدم هي أكاديمية تعليمية متخصصة تدعم طلاب المرحلة الثانوية
+        في مهارات اللغة الإنجليزية والرياضيات والمهارات الرقمية، في بيئة تعليمية
+        آمنة ومحفزة.
+      </p>
+      <p class="aa-footer-contact-line">هاتف: 9200 123 45</p>
+      <p class="aa-footer-contact-line">واتساب: 055 000 0000</p>
+      <p class="aa-footer-contact-line">بريد إلكتروني: info@advantageacademy.sa</p>
+    </div>
+
+    <div class="aa-footer-col">
+      <h4 class="aa-footer-title">التواصل</h4>
+      <ul class="aa-footer-list">
+        <li>الهاتف الرئيسي: 9200 123 45</li>
+        <li>واتساب الدعم: 055 000 0000</li>
+        <li>البريد الإلكتروني: info@advantageacademy.sa</li>
+      </ul>
+    </div>
+
+    <div class="aa-footer-col">
+      <h4 class="aa-footer-title">روابط سريعة</h4>
+      <ul class="aa-footer-list">
+        <li><a href="{{ url_for('student_dashboard') }}">الرئيسية</a></li>
+        <li><a href="{{ url_for('student_schedule') }}">الجدول الدراسي</a></li>
+        <li><a href="{{ url_for('student_attendance') }}">الحضور والغياب</a></li>
+        <li><a href="{{ url_for('student_events') }}">الفعاليات</a></li>
+        <li><a href="{{ url_for('student_points') }}">نقاطك</a></li>
+        <li><a href="{{ url_for('student_excuses') }}">رفع عذر</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="aa-footer-bottom">
+    <span>© جميع الحقوق محفوظة لأكاديمية التقدم 2025</span>
+  </div>
+</footer>

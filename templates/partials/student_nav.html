@@ -1,0 +1,17 @@
+<div class="student-navbar">
+  <div class="right-section">
+    <a href="{{ url_for('student_dashboard') }}">
+      <img src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}" class="student-logo" alt="أكاديمية التقدم">
+    </a>
+  </div>
+
+  <div class="left-section">
+    <a href="{{ url_for('student_dashboard') }}" class="nav-link{% if request.endpoint == 'student_dashboard' %} active{% endif %}">الرئيسية</a>
+    <a href="{{ url_for('student_schedule') }}" class="nav-link{% if request.endpoint == 'student_schedule' %} active{% endif %}">الجدول الدراسي</a>
+    <a href="{{ url_for('student_attendance') }}" class="nav-link{% if request.endpoint == 'student_attendance' %} active{% endif %}">الحضور والغياب</a>
+    <a href="{{ url_for('student_points') }}" class="nav-link{% if request.endpoint == 'student_points' %} active{% endif %}">نقاطك</a>
+    <a href="{{ url_for('student_events') }}" class="nav-link{% if request.endpoint == 'student_events' %} active{% endif %}">الفعاليات</a>
+    <a href="{{ url_for('student_excuses') }}" class="nav-link{% if request.endpoint == 'student_excuses' %} active{% endif %}">رفع عذر</a>
+    <a href="{{ url_for('logout') }}" class="nav-link logout">تسجيل الخروج</a>
+  </div>
+</div>

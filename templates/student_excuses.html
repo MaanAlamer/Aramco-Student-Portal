@@ -5,217 +5,20 @@
   <title>رفع عذر | أكاديمية التقدم</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}">
-  <!-- ✅ نفس ستايل الطالب -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/student_dashboard.css') }}">
-
-  <style>
-    /* ✅ إضافات بسيطة فقط لتنسيق جدول الأعذار بدون كسر ستايلك */
-    .excuse-wrap{
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px 18px;
-    }
-    .excuse-card{
-      background: rgba(2, 6, 23, 0.55);
-      border: 1px solid rgba(59, 130, 246, 0.25);
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.45);
-      backdrop-filter: blur(10px);
-    }
-    .excuse-title{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:14px;
-      margin-bottom: 14px;
-    }
-    .excuse-title h2{
-      margin:0;
-      font-size: 22px;
-      font-weight: 800;
-    }
-    .excuse-title p{
-      margin:6px 0 0;
-      opacity:.8;
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    .excuse-form{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      margin-top: 10px;
-    }
-    .excuse-form .full{
-      grid-column: 1 / -1;
-    }
-
-    .field label{
-      display:block;
-      font-size: 12px;
-      opacity:.85;
-      margin: 0 0 6px;
-    }
-    .field input,
-    .field textarea{
-      width:100%;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      background: rgba(15, 23, 42, 0.55);
-      color: #e5e7eb;
-      outline: none;
-    }
-    .field textarea{
-      min-height: 110px;
-      resize: vertical;
-      line-height: 1.8;
-    }
-
-    .hint{
-      font-size: 12px;
-      opacity:.8;
-      margin-top: 6px;
-    }
-
-    .actions-row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-top: 10px;
-    }
-    .btn-aa{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(59, 130, 246, 0.35);
-      background: rgba(15, 23, 42, 0.55);
-      color: #e5e7eb;
-      text-decoration:none;
-      cursor:pointer;
-      font-size: 13px;
-      transition: .15s ease;
-    }
-    .btn-aa:hover{ transform: translateY(-1px); }
-    .btn-aa.primary{
-      background: linear-gradient(90deg, rgba(59,130,246,.85), rgba(99,102,241,.85));
-      border-color: rgba(199,210,254,.35);
-    }
-
-    .flash{
-      margin: 10px 0 0;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(59, 130, 246, 0.25);
-      background: rgba(15, 23, 42, 0.55);
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    .table-wrap{
-      margin-top: 16px;
-      border-radius: 16px;
-      overflow:hidden;
-      border: 1px solid rgba(59, 130, 246, 0.25);
-      background: rgba(2, 6, 23, 0.45);
-    }
-    .t-head, .t-row{
-      display:grid;
-      grid-template-columns: 1.2fr .7fr .55fr .45fr;
-      gap:10px;
-      align-items:center;
-      padding: 12px 12px;
-      font-size: 13px;
-    }
-    .t-head{
-      font-size: 12px;
-      opacity:.85;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
-      background: rgba(15, 23, 42, 0.35);
-      font-weight: 700;
-    }
-    .t-row{
-      border-bottom: 1px solid rgba(148, 163, 184, 0.08);
-    }
-    .t-row:last-child{ border-bottom:none; }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      border: 1px solid transparent;
-      white-space:nowrap;
-    }
-    .pill.new{
-      background: rgba(59,130,246,.18);
-      border-color: rgba(59,130,246,.45);
-    }
-    .pill.approved{
-      background: rgba(34,197,94,.18);
-      border-color: rgba(34,197,94,.45);
-    }
-    .pill.rejected{
-      background: rgba(239,68,68,.18);
-      border-color: rgba(239,68,68,.45);
-    }
-
-    .file-link{
-      color: #93c5fd;
-      text-decoration: underline;
-      font-size: 12px;
-    }
-    .empty{
-      padding: 14px 12px;
-      opacity:.85;
-      font-size: 13px;
-    }
-
-    @media (max-width: 860px){
-      .excuse-form{ grid-template-columns: 1fr; }
-      .t-head{ display:none; }
-      .t-row{
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/student_portal.css') }}">
 </head>
-
 <body class="student-page">
 
-  <!-- ✅ نفس هيدر الطالب -->
-  <header class="student-hero" id="home-section" style="min-height: 260px;">
+  {% include 'partials/student_nav.html' %}
+
+  <header class="student-hero student-hero--compact" id="home-section">
     <div class="student-hero-bg">
       <img src="{{ url_for('static', filename='assets/book.jpg') }}" alt="خلفية" class="student-hero-image">
       <div class="student-hero-overlay"></div>
     </div>
 
-    <div class="student-navbar">
-      <div class="right-section">
-        <img src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}" class="student-logo" alt="logo">
-      </div>
-
-      <div class="left-section">
-        <a href="{{ url_for('student_dashboard') }}" class="nav-link">الرئيسية</a>
-        <a href="{{ url_for('student_schedule') }}" class="nav-link">الجدول الدراسي</a>
-        <a href="{{ url_for('student_attendance') }}" class="nav-link">الحضور والغياب</a>
-        <a href="{{ url_for('student_points') }}" class="nav-link">نقاطك</a>
-        <a href="{{ url_for('student_events') }}" class="nav-link">الفعاليات</a>
-        <a href="{{ url_for('student_excuses') }}" class="nav-link active">رفع عذر</a>
-        <a href="{{ url_for('logout') }}" class="nav-link logout">تسجيل الخروج</a>
-      </div>
-    </div>
-
-    <div class="student-hero-content" style="padding-top: 28px;">
+    <div class="student-hero-content">
       <p class="student-welcome">
         مرحباً بك، <span>{{ student_name or 'الطالب' }}</span>
       </p>
@@ -227,7 +30,7 @@
   </header>
 
   <main class="student-main">
-    <div class="excuse-wrap">
+    <div class="excuse-wrap sp-main">
 
       <section class="excuse-card">
         <div class="excuse-title">
@@ -246,19 +49,19 @@
 
         <form class="excuse-form" method="post" action="{{ url_for('student_excuses') }}" enctype="multipart/form-data">
           <div class="field">
-            <label>التاريخ</label>
-            <input type="date" name="date" required>
+            <label for="excuse-date">التاريخ</label>
+            <input type="date" id="excuse-date" name="date" required>
           </div>
 
           <div class="field">
-            <label>المرفق (اختياري)</label>
-            <input type="file" name="attachment" accept=".png,.jpg,.jpeg,.pdf">
+            <label for="excuse-attachment">المرفق (اختياري)</label>
+            <input type="file" id="excuse-attachment" name="attachment" accept=".png,.jpg,.jpeg,.pdf">
             <div class="hint">المسموح: PNG / JPG / PDF (حد أقصى 6MB)</div>
           </div>
 
           <div class="field full">
-            <label>سبب العذر</label>
-            <textarea name="reason" required placeholder="اكتب سبب العذر بشكل واضح ومختصر…"></textarea>
+            <label for="excuse-reason">سبب العذر</label>
+            <textarea id="excuse-reason" name="reason" required placeholder="اكتب سبب العذر بشكل واضح ومختصر…"></textarea>
           </div>
 
           <div class="actions-row full">
@@ -268,8 +71,8 @@
         </form>
       </section>
 
-      <section class="excuse-card" style="margin-top: 14px;">
-        <div class="excuse-title" style="margin-bottom: 10px;">
+      <section class="excuse-card">
+        <div class="excuse-title">
           <div>
             <h2>الأعذار السابقة</h2>
             <p>هنا تظهر كل أعذارك مع حالة كل طلب.</p>
@@ -301,7 +104,7 @@
                 {% if r.attachment_url %}
                   <a class="file-link" href="{{ r.attachment_url }}" target="_blank">عرض</a>
                 {% else %}
-                  <span style="opacity:.8;font-size:12px;">—</span>
+                  <span class="sp-muted" style="font-size:12px;">—</span>
                 {% endif %}
               </div>
             </div>
@@ -316,5 +119,6 @@
     </div>
   </main>
 
+  {% include 'partials/student_footer.html' %}
 </body>
 </html>

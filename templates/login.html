@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8" />
-    <title>تسجيل الدخول | أكاديمية التقدّم</title>
+    <title>أكاديمية التقدّم | Advantage Academy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}">
     <style>
@@ -40,6 +40,9 @@
         .login-left {
             flex: 1;
             background: #020617;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .login-right {
@@ -52,6 +55,15 @@
             gap: 32px;
         }
 
+        .demo-entry {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 20px;
+        }
+
         .login-title {
             font-size: 32px;
             margin: 0 0 8px;
@@ -62,75 +74,57 @@
             font-size: 16px;
             color: #9ca3af;
             text-align: center;
-            margin: 0 0 32px;
+            margin: 0 0 12px;
+            line-height: 1.6;
         }
 
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-label {
-            display: block;
+        .demo-note {
             font-size: 13px;
-            margin-bottom: 4px;
-            color: #e5e7eb;
+            color: #6b7280;
+            text-align: center;
+            margin: 0 0 8px;
         }
 
-        .form-input {
+        .btn-demo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 100%;
-            padding: 11px 14px;
-            border-radius: 14px;
-            border: 1px solid #1f2937;
-            background: #020617;
-            color: #f9fafb;
-            font-size: 14px;
-            outline: none;
+            min-height: 64px;
+            padding: 20px 28px;
+            border-radius: 999px;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             box-sizing: border-box;
         }
 
-        .form-input:focus {
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.7);
+        .btn-demo:hover {
+            transform: translateY(-2px);
         }
 
-        .forgot-link {
-            display: inline-block;
-            margin-top: 4px;
-            margin-bottom: 18px;
-            font-size: 12px;
-            color: #a5b4fc;
-            text-decoration: none;
-        }
-
-        .btn-primary,
-        .btn-outline,
-        .btn-ghost {
-            width: 100%;
-            padding: 12px 18px;
-            border-radius: 999px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 14px;
-        }
-
-        .btn-primary {
-            border: none;
+        .btn-demo-student {
             background: linear-gradient(90deg, #4f46e5, #6366f1);
             color: #f9fafb;
+            box-shadow: 0 14px 40px rgba(79, 70, 229, 0.45);
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 1px solid rgba(148, 163, 184, 0.6);
-            color: #f9fafb;
+        .btn-demo-student:hover {
+            box-shadow: 0 18px 48px rgba(79, 70, 229, 0.55);
         }
 
-        .btn-ghost {
-            max-width: 420px;
+        .btn-demo-coordinator {
             background: transparent;
-            border: 1px solid rgba(226, 232, 240, 0.8);
             color: #f9fafb;
+            border: 2px solid rgba(148, 163, 184, 0.65);
+        }
+
+        .btn-demo-coordinator:hover {
+            border-color: #a5b4fc;
+            box-shadow: 0 12px 36px rgba(148, 163, 184, 0.2);
         }
 
         .login-logo {
@@ -139,16 +133,17 @@
             filter: drop-shadow(0 0 10px rgba(15, 23, 42, 0.9));
         }
 
-        .login-footer {
-            font-size: 12px;
-            text-align: center;
-            margin-top: 10px;
-            color: #9ca3af;
-        }
-
-        .login-footer a {
-            color: #a5b4fc;
-            text-decoration: none;
+        .btn-ghost {
+            max-width: 420px;
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 999px;
+            font-size: 15px;
+            font-weight: 600;
+            background: transparent;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            color: #f9fafb;
+            cursor: default;
         }
 
         .error {
@@ -156,139 +151,8 @@
             color: #fca5a5;
             padding: 10px 12px;
             border-radius: 10px;
-            margin-bottom: 16px;
             font-size: 13px;
             border: 1px solid rgba(239, 68, 68, 0.4);
-        }
-
-        .info {
-            background: rgba(59, 130, 246, 0.2);
-            color: #93c5fd;
-            padding: 10px 12px;
-            border-radius: 10px;
-            margin-bottom: 16px;
-            font-size: 13px;
-            border: 1px solid rgba(59, 130, 246, 0.4);
-        }
-
-        /* حاوي السلايد */
-        .form-switcher {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            max-height: calc(100vh - 220px);
-            overflow-x: hidden;
-            overflow-y: auto;
-            scroll-behavior: smooth;
-        }
-
-        /* الفورمين فوق بعض ويتحركون */
-        .form-box {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            padding: 40px 60px 60px;
-            box-sizing: border-box;
-            transition: transform 0.6s ease-in-out, opacity 0.6s;
-        }
-
-        /* الوضع الافتراضي: عرض نموذج تسجيل الدخول */
-        .student-login {
-            transform: translateX(0);
-            opacity: 1;
-            z-index: 2;
-        }
-
-        .student-register {
-            transform: translateX(100%);
-            opacity: 0;
-            z-index: 1;
-        }
-
-        /* لما نضيف الكلاس show-register على formSwitcher نعكس الوضع */
-        .form-switcher.show-register .student-login {
-            transform: translateX(-100%);
-            opacity: 0;
-            z-index: 1;
-        }
-
-        .form-switcher.show-register .student-register {
-            transform: translateX(0);
-            opacity: 1;
-            z-index: 2;
-        }
-
-        /* Auth form styling */
-        .auth-label {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 4px;
-            color: #e5e7eb;
-        }
-
-        .auth-input {
-            width: 100%;
-            padding: 11px 14px;
-            border-radius: 14px;
-            border: 1px solid #1f2937;
-            background: #020617;
-            color: #f9fafb;
-            font-size: 14px;
-            outline: none;
-            box-sizing: border-box;
-            margin-bottom: 18px;
-        }
-
-        .auth-input:focus {
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.7);
-        }
-
-        .auth-btn {
-            width: 100%;
-            padding: 12px 18px;
-            border-radius: 999px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 14px;
-        }
-
-        .primary-btn {
-            border: none;
-            background: linear-gradient(90deg, #4f46e5, #6366f1);
-            color: #f9fafb;
-        }
-
-        .auth-footer {
-            margin-top: 12px;
-            font-size: 12px;
-            color: #9ca3af;
-        }
-
-        .auth-footer a {
-            color: #a5b4fc;
-            text-decoration: none;
-        }
-
-        .auth-footer-left {
-            text-align: left;
-        }
-
-        .scroll-hint {
-            font-size: 12px;
-            color: #6b7280;
-            text-align: center;
-            margin: 4px 0 10px;
-        }
-
-        /* ✅ ملاحظة صغيرة للمشرف */
-        .hint {
-            margin-top: -6px;
-            margin-bottom: 16px;
-            font-size: 12px;
-            color: #9ca3af;
             text-align: center;
         }
 
@@ -296,6 +160,7 @@
             .login-card {
                 flex-direction: column;
                 max-width: 480px;
+                border-radius: 32px;
             }
 
             .login-panel {
@@ -306,8 +171,10 @@
                 order: -1;
             }
 
-            .form-box {
-                padding: 28px 24px;
+            .btn-demo {
+                font-size: 18px;
+                min-height: 56px;
+                padding: 16px 22px;
             }
         }
     </style>
@@ -315,128 +182,30 @@
 <body>
 <section class="login-wrapper">
   <div class="login-card">
-    <!-- القسم الأيسر: نموذج الدخول مع السلايد -->
     <div class="login-panel login-left">
+      <div class="demo-entry">
+        <h1 class="login-title">أكاديمية التقدّم</h1>
+        <p class="login-subtitle">استكشف المنصة مباشرة — وضع العرض التجريبي</p>
+        <p class="demo-note">اختر نوع الحساب للانتقال إلى لوحة التحكم</p>
 
-      <!-- حاوي للفورمين مع حركة السلايد -->
-      <div class="form-switcher" id="formSwitcher">
+        {% if error %}<div class="error">{{ error }}</div>{% endif %}
 
-        <!-- 1) نموذج تسجيل دخول الطالب -->
-        <div class="form-box student-login">
-          <h1 class="login-title">تسجيل الدخول</h1>
-          <p class="login-subtitle">ادخل رقم الهوية وكلمة المرور للمتابعة</p>
-
-          {% if error %}<div class="error">{{ error }}</div>{% endif %}
-          {% if info %}<div class="info">{{ info }}</div>{% endif %}
-
-          <form id="loginForm" method="post" action="{{ url_for('login') }}">
-            <input type="hidden" name="mode" value="login">
-
-            <div class="form-group">
-              <label class="form-label">رقم الهوية</label>
-              <input type="text" class="form-input" id="loginIdentity" name="identity"
-                     placeholder="أدخل رقم الهوية" pattern="[0-9]{8,12}" required />
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">كلمة المرور</label>
-              <input type="password" class="form-input" name="password"
-                     placeholder="••••••••" required />
-            </div>
-
-            <a href="#" class="forgot-link">نسيت كلمة المرور؟</a>
-
-            <button type="submit" class="btn-primary">تسجيل الدخول</button>
-
-            <!-- ✅ زر المشرف: لازم يودّي لصفحة تسجيل دخول المشرف -->
-            <button type="button" class="btn-outline" id="supervisorLoginBtn">
-              تسجيل دخول مشرف (إيميل أرامكو)
-            </button>
-            <div class="hint">مخصص لمشرفي الأكاديمية بإيميل @aramco.com أو رقم الموظف</div>
-
-            <p class="login-footer">
-              مستخدم جديد؟
-              <a href="javascript:void(0)" id="showRegisterLink">إنشاء حساب لأول مرة</a>
-            </p>
-          </form>
-        </div>
-
-        <!-- 2) نموذج إنشاء حساب طالب جديد (صار يرسل فعلياً للباك اند) -->
-        <div class="form-box student-register">
-          <h1 class="login-title">إنشاء حساب طالب جديد</h1>
-          <p class="login-subtitle">قم بتعبئة البيانات لإنشاء حسابك في الأكاديمية</p>
-
-          <form method="post" action="{{ url_for('register_student') }}">
-            <label class="auth-label">الاسم الكامل</label>
-            <input type="text" class="auth-input" name="full_name" placeholder="ادخل اسمك الكامل" required>
-
-            <label class="auth-label">رقم الهوية / السجل المدني</label>
-            <input type="text" class="auth-input" name="identity" placeholder="مثال: 1234567890" required>
-
-            <label class="auth-label">رقم الجوال</label>
-            <input type="tel" class="auth-input" name="phone" placeholder="05xxxxxxxx" required>
-
-            <label class="auth-label">البريد الإلكتروني</label>
-            <input type="email" class="auth-input" name="email" placeholder="example@email.com" required>
-
-            <label class="auth-label">كلمة المرور</label>
-            <input type="password" class="auth-input" name="password" placeholder="••••••••" required>
-
-            <label class="auth-label">تأكيد كلمة المرور</label>
-            <input type="password" class="auth-input" name="password2" placeholder="أعد إدخال كلمة المرور" required>
-
-            <div class="scroll-hint">
-              ⬇ مرّر لأسفل لإكمال البيانات
-            </div>
-
-            <button type="submit" class="auth-btn primary-btn">إنشاء الحساب</button>
-
-            <p class="auth-footer auth-footer-left">
-              لديك حساب بالفعل؟
-              <a href="javascript:void(0)" id="showLoginLink">تسجيل الدخول</a>
-            </p>
-          </form>
-        </div>
-
+        <a href="{{ url_for('login', enter='student') }}" class="btn-demo btn-demo-student">
+          الدخول كطالب
+        </a>
+        <a href="{{ url_for('login', enter='coordinator') }}" class="btn-demo btn-demo-coordinator">
+          الدخول كمشرف
+        </a>
       </div>
     </div>
 
-    <!-- القسم الأيمن: الشعار -->
     <div class="login-panel login-right">
       <img src="{{ url_for('static', filename='assets/logoAA-removebg-preview.png') }}" alt="Advantage Academy" class="login-logo" />
       <button type="button" class="btn-ghost">
         مرحباً بك في أكاديمية التقدم
       </button>
     </div>
-
   </div>
 </section>
-
-<script>
-    // Form switcher functionality
-    const formSwitcher = document.getElementById('formSwitcher');
-    const showRegisterLink = document.getElementById('showRegisterLink');
-    const showLoginLink = document.getElementById('showLoginLink');
-
-    if (showRegisterLink) {
-        showRegisterLink.addEventListener('click', function () {
-            formSwitcher.classList.add('show-register');
-        });
-    }
-
-    if (showLoginLink) {
-        showLoginLink.addEventListener('click', function () {
-            formSwitcher.classList.remove('show-register');
-        });
-    }
-
-    // ✅ Supervisor login button (redirect to coordinator_login)
-    const supervisorLoginBtn = document.getElementById('supervisorLoginBtn');
-    if (supervisorLoginBtn) {
-        supervisorLoginBtn.addEventListener('click', () => {
-            window.location.href = "{{ url_for('coordinator_login') }}";
-        });
-    }
-</script>
 </body>
 </html>
